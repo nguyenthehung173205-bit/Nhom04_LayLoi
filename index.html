@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tư vấn, Thiết kế và Bán Quà tặng</title>
+    <title>GiftDesign - Tư vấn, Thiết kế & Quà tặng</title>
     <style>
         /* --- CSS Reset & Cơ bản --- */
+        html {
+            scroll-behavior: smooth; /* Hiệu ứng cuộn trang mượt mà */
+            scroll-padding-top: 90px; /* Trừ hao khoảng trống để Header không che mất tiêu đề khi cuộn */
+        }
         * {
             margin: 0;
             padding: 0;
@@ -60,9 +64,8 @@
         .nav-links li a:hover {
             color: #d4af37;
         }
-        /* Ẩn nút đóng menu trên máy tính */
         .close-sidebar-btn {
-            display: none;
+            display: none; /* Ẩn nút đóng menu trên máy tính */
         }
 
         /* Khối công cụ bên phải (Giỏ hàng & Nút bấm Mobile) */
@@ -277,41 +280,35 @@
             nav {
                 padding: 15px 20px;
             }
-            
-            /* Hiện nút 3 gạch */
             .menu-toggle-btn {
                 display: block;
             }
-            
-            /* Ẩn chữ "Giỏ hàng" trên mobile để tiết kiệm không gian, chỉ giữ icon 🛒 và số lượng */
             .cart-text {
-                display: none;
+                display: none; /* Ẩn chữ "Giỏ hàng", chỉ giữ icon */
             }
 
-            /* BIẾN MENU THÀNH THANH BÊN (SIDEBAR CHẠY RA) */
+            /* THANH BÊN (SIDEBAR) TRÊN MOBILE */
             .nav-links {
                 position: fixed;
                 top: 0;
-                right: -260px; /* Ẩn tạm thời bên phải màn hình */
+                right: -260px; /* Ẩn tạm thời */
                 width: 260px;
                 height: 100vh;
                 background-color: #fff;
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-                flex-direction: column; /* Xếp các tùy chọn theo hàng dọc */
+                flex-direction: column;
                 align-items: flex-start;
                 justify-content: flex-start;
                 padding: 30px 20px;
                 gap: 0;
-                transition: right 0.3s ease-in-out; /* Hiệu ứng trượt mượt mà */
+                transition: right 0.3s ease-in-out;
                 z-index: 1500;
             }
 
-            /* Khi Sidebar được thêm class .active bằng JS, nó sẽ trượt ra */
             .nav-links.active {
-                right: 0;
+                right: 0; /* Trượt ra khi được gọi */
             }
 
-            /* Thiết kế các hàng tùy chọn trong thanh bên */
             .nav-links li {
                 width: 100%;
                 border-bottom: 1px solid #eee;
@@ -323,7 +320,6 @@
                 color: #333;
             }
 
-            /* Nút X đóng thanh bên */
             .close-sidebar-btn {
                 display: block;
                 font-size: 30px;
@@ -333,7 +329,6 @@
                 color: #999;
             }
 
-            /* Các thành phần giao diện khác co nhỏ lại cho vừa mobile */
             .hero h1 { font-size: 1.8rem; }
             .hero p { font-size: 1rem; }
             .section { padding: 40px 15px; }
@@ -347,14 +342,14 @@
 
     <header>
         <nav>
-            <div class="logo">SweetGift</div>
+            <div class="logo">GiftDesign.</div>
             
             <ul class="nav-links" id="navLinks">
                 <span class="close-sidebar-btn" onclick="toggleMenu()">&times;</span>
-                <li><a href="#trangchu" onclick="toggleMenu()">Trang chủ</a></li>
-                <li><a href="#dichvu" onclick="toggleMenu()">Dịch vụ</a></li>
-                <li><a href="#quatang" onclick="toggleMenu()">Quà tặng</a></li>
-                <li><a href="#lienhe" onclick="toggleMenu()">Liên hệ</a></li>
+                <li><a href="#trangchu" onclick="closeMenu()">Trang chủ</a></li>
+                <li><a href="#dichvu" onclick="closeMenu()">Dịch vụ</a></li>
+                <li><a href="#quatang" onclick="closeMenu()">Quà tặng</a></li>
+                <li><a href="#lienhe" onclick="closeMenu()">Liên hệ</a></li>
             </ul>
 
             <div class="toolbar-right">
@@ -437,24 +432,30 @@
     </div>
 
     <footer id="lienhe">
-        <h2>Sẵn sàng bắt đầu dự án cùng chúng tôi, vui lòng liên hệ địa chỉ bên dưới</h2>
-        <p style="margin: 15px 0;">Email: nhom04_layloi_DMST@giftdesign.vn | Hotline: 0123 456 789</p>
-        <p>&copy; 2026 SweetGift Thiết kế bằng cả trái tim 💛.</p>
+        <h2>Sẵn sàng bắt đầu dự án cùng chúng tôi?</h2>
+        <p style="margin: 15px 0;">Email: hello@giftdesign.vn | Hotline: 0123 456 789</p>
+        <p>&copy; 2026 GiftDesign. Thiết kế với 💛.</p>
     </footer>
 
     <script>
         // --- 1. ĐIỀU KHIỂN THANH BÊN (SIDEBAR) TRÊN MOBILE ---
+        const navLinks = document.getElementById('navLinks');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        // Mở/Đóng menu khi bấm nút ☰
         function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            
-            // Thêm hoặc gỡ bỏ class .active để kích hoạt hiệu ứng trượt CSS
             navLinks.classList.toggle('active');
-            
-            // Ẩn/Hiện lớp nền mờ tối
             if(navLinks.classList.contains('active')) {
                 sidebarOverlay.style.display = 'block';
             } else {
+                sidebarOverlay.style.display = 'none';
+            }
+        }
+
+        // Đóng menu khi bấm vào một tùy chọn (Chỉ trên Mobile)
+        function closeMenu() {
+            if (window.innerWidth <= 768) {
+                navLinks.classList.remove('active');
                 sidebarOverlay.style.display = 'none';
             }
         }
@@ -470,12 +471,10 @@
         const cartItemsContainer = document.getElementById('cart-items-container');
         const cartTotalPrice = document.getElementById('cart-total-price');
 
-        // Đóng/Mở cửa sổ giỏ hàng
         cartMenuBtn.onclick = () => cartModal.style.display = "block";
         closeBtn.onclick = () => cartModal.style.display = "none";
         window.onclick = (event) => { if (event.target == cartModal) cartModal.style.display = "none"; }
 
-        // Lắng nghe sự kiện click nút Thêm vào giỏ
         const addButtons = document.querySelectorAll('.add-to-cart');
         addButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -488,7 +487,6 @@
             });
         });
 
-        // Cập nhật giao diện danh sách giỏ hàng
         function updateCartUI() {
             cartCount.innerText = cart.length;
 
@@ -517,13 +515,11 @@
             cartTotalPrice.innerText = total.toLocaleString('vi-VN') + " VNĐ";
         }
 
-        // Xóa sản phẩm
         function removeItem(index) {
             cart.splice(index, 1);
             updateCartUI();
         }
 
-        // Đặt hàng
         function checkout() {
             if (cart.length === 0) {
                 alert("Giỏ hàng của bạn đang trống!");
