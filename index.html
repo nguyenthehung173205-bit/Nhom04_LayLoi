@@ -33,7 +33,8 @@
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000;
+            z-index: 1000; /* Nằm dưới Overlay (1400) */
+            transition: 0.3s; /* Hiệu ứng chuyển cảnh khi mờ đi */
         }
         nav {
             display: flex;
@@ -162,13 +163,32 @@
         .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: normal; }
         .radio-option input { width: auto; cursor: pointer; }
 
-        /* --- FOOTER / LIÊN HỆ (Đã khôi phục nền đen, chữ giữa) --- */
+        /* --- FOOTER / LIÊN HỆ --- */
         footer { 
             background-color: #222; 
             color: white; 
             text-align: center; 
             padding: 30px 20px; 
             margin-top: 40px; 
+        }
+
+        /* --- LỚP NỀN MỜ CHO MENU ĐIỆN THOẠI (Nằm đè lên thanh công cụ) --- */
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100vh;
+            background-color: rgba(0,0,0,0.6); /* Tối hơn một chút */
+            backdrop-filter: blur(2px); /* Thêm hiệu ứng blur chuyên nghiệp */
+            z-index: 1400; /* Cao hơn fixed header (1000) */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
         }
 
         /* --- CẤU HÌNH GIAO DIỆN TRÊN ĐIỆN THOẠI --- */
@@ -191,7 +211,7 @@
                 padding: 30px 20px;
                 gap: 0;
                 transition: right 0.3s ease-in-out;
-                z-index: 1500;
+                z-index: 1500; /* Cao nhất */
             }
 
             .nav-links.active { right: 0; }
@@ -205,22 +225,34 @@
             .section { padding: 40px 15px; }
             .section-title { font-size: 1.8rem; margin-bottom: 25px; }
             .modal-content { margin: 15% auto; padding: 20px; }
+
+            /* --- VÔ HIỆU HÓA HOÀN TOÀN THANH CÔNG CỤ KHI MENU MỞ (Dựa trên Body class) --- */
+            body.menu-open #main-header nav .logo,
+            body.menu-open #main-header nav .toolbar-right {
+                filter: brightness(0.6) blur(2px); /* Làm tối và mờ visual */
+                pointer-events: none; /* Khóa không cho bấm */
+                transition: 0.3s;
+            }
         }
     </style>
 </head>
 <body>
 
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+    <ul class="nav-links" id="navLinks">
+        <span class="close-sidebar-btn" onclick="toggleMenu()">&times;</span>
+        <li><a href="#trangchu" onclick="closeMenu()">Trang chủ</a></li>
+        <li><a href="#dichvu" onclick="closeMenu()">Dịch vụ</a></li>
+        <li><a href="#quatang" onclick="closeMenu()">Quà tặng</a></li>
+        <li><a href="#lienhe" onclick="closeMenu()">Liên hệ</a></li>
+    </ul>
+
     <header id="main-header">
         <nav>
             <div class="logo">SweetGift.</div>
             
-            <ul class="nav-links" id="navLinks">
-                <span class="close-sidebar-btn" onclick="toggleMenu()">&times;</span>
-                <li><a href="#trangchu" onclick="closeMenu()">Trang chủ</a></li>
-                <li><a href="#dichvu" onclick="closeMenu()">Dịch vụ</a></li>
-                <li><a href="#quatang" onclick="closeMenu()">Quà tặng</a></li>
-                <li><a href="#lienhe" onclick="closeMenu()">Liên hệ</a></li>
-            </ul>
+            <div class="desktop-menu-placeholder" id="desktopMenuContainer"></div>
 
             <div class="toolbar-right">
                 <a id="cart-menu-btn">🛒 <span class="cart-text">Giỏ hàng</span> (<span id="cart-count">0</span>)</a>
@@ -369,20 +401,63 @@
     </footer>
 
     <script>
-        // --- 1. ĐIỀU KHIỂN THANH BÊN ---
+        // --- 1. ĐIỀU KHIỂN THANH BÊN & OVERLAY & BODY CLASS ---
         const navLinks = document.getElementById('navLinks');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const desktopMenuContainer = document.getElementById('desktopMenuContainer');
 
-        function toggleMenu() {
-            navLinks.classList.toggle('active');
-        }
-
-        function closeMenu() {
-            if (window.innerWidth <= 768) {
-                navLinks.classList.remove('active');
+        // Hàm xử lý di chuyển vị trí Nav Links tùy theo kích thước màn hình
+        function adjustMenuStructure() {
+            if (window.innerWidth > 768) {
+                // Trên Desktop: Di chuyển navLinks VÀO TRONG header->nav->container
+                if (desktopMenuContainer && !desktopMenuContainer.contains(navLinks)) {
+                    desktopMenuContainer.appendChild(navLinks);
+                    // Đảm bảo đóng menu di động nếu đang mở
+                    document.body.classList.remove('menu-open');
+                    navLinks.classList.remove('active');
+                    if(menuOverlay) menuOverlay.classList.remove('active');
+                }
+            } else {
+                // Trên Mobile: Di chuyển navLinks RA NGOÀI body
+                if (document.body.contains(navLinks) && !desktopMenuContainer.contains(navLinks)) {
+                     // Nếu nó đã nằm ngoài sẵn thì không làm gì cả
+                } else {
+                    document.body.insertBefore(navLinks, document.body.firstChild);
+                }
             }
         }
 
-        // --- 2. LOGIC QUẢN LÝ CÁC CỬA SỔ MODAL ---
+        // Chạy khi tải trang và khi thay đổi kích thước
+        window.addEventListener('load', adjustMenuStructure);
+        window.addEventListener('resize', adjustMenuStructure);
+
+        function toggleMenu() {
+            // Chỉ hoạt động trên mobile
+            if (window.innerWidth <= 768) {
+                const isActive = navLinks.classList.contains('active');
+                
+                if (isActive) {
+                    // Đóng menu
+                    closeMenu();
+                } else {
+                    // Mở menu
+                    navLinks.classList.add('active');
+                    if(menuOverlay) menuOverlay.classList.add('active');
+                    document.body.classList.add('menu-open'); // Khóa Header trắng
+                }
+            }
+        }
+
+        function closeMenu() {
+            // Chỉ hoạt động trên mobile
+            if (window.innerWidth <= 768) {
+                navLinks.classList.remove('active');
+                if(menuOverlay) menuOverlay.classList.remove('active');
+                document.body.classList.remove('menu-open'); // Mở khóa Header trắng
+            }
+        }
+
+        // --- 2. LOGIC QUẢN LÝ CÁC CỬA SỔ MODAL (GIỮ NGUYÊN) ---
         const cartModal = document.getElementById('cart-modal');
         const consultModal = document.getElementById('consult-modal');
         const orderInfoModal = document.getElementById('order-info-modal');
@@ -406,7 +481,7 @@
             if (event.target == orderInfoModal) orderInfoModal.style.display = "none"; 
         }
 
-        // --- 3. XỬ LÝ DỮ LIỆU ĐĂNG KÝ TƯ VẤN ---
+        // --- 3. XỬ LÝ DỮ LIỆU ĐĂNG KÝ TƯ VẤN (GIỮ NGUYÊN) ---
         function handleConsultSubmit(event) {
             event.preventDefault(); 
             
@@ -420,7 +495,7 @@
             closeConsultModal(); 
         }
 
-        // --- 4. LOGIC XỬ LÝ GIỎ HÀNG ---
+        // --- 4. LOGIC XỬ LÝ GIỎ HÀNG (GIỮ NGUYÊN) ---
         let cart = [];
         const cartCount = document.getElementById('cart-count');
         const cartItemsContainer = document.getElementById('cart-items-container');
@@ -471,12 +546,13 @@
             updateCartUI();
         }
 
-        // --- 5. LOGIC TIẾN HÀNH ĐẶT HÀNG ---
+        // --- 5. LOGIC TIẾN HÀNH ĐẶT HÀNG (GIỮ NGUYÊN) ---
         function checkout() {
             if (cart.length === 0) {
                 alert("Giỏ hàng của bạn đang trống!");
                 return;
             }
+            // Mở ô điền thông tin và đóng giỏ hàng
             closeCartModal();
             orderInfoModal.style.display = "block";
         }
@@ -492,6 +568,7 @@
 
             alert(`🎉 ĐẶT HÀNG THÀNH CÔNG!\n\nThông tin người nhận:\n- Họ tên: ${name}\n- Số ĐT: ${phone}\n- Email: ${email}\n- Địa chỉ: ${address}\n- Hình thức ship: ${shippingMethod}\n- Tổng thanh toán: ${cartTotalPrice.innerText}\n\nCảm ơn bạn! Chúng tôi sẽ gọi điện xác thực đơn hàng trong vòng vài phút tới.`);
 
+            // Reset
             cart = []; 
             updateCartUI(); 
             event.target.reset(); 
