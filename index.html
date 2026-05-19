@@ -7,7 +7,8 @@
     <style>
         /* --- CSS Reset & Cơ bản --- */
         html {
-            scroll-behavior: smooth; /* Cuộn mượt mà */
+            scroll-behavior: smooth; /* Cuộn mượt mà nguyên bản */
+            scroll-padding-top: 90px; /* Trừ hao khoảng trống để Header không che mất tiêu đề */
         }
         * {
             margin: 0;
@@ -96,16 +97,7 @@
             color: #333;
         }
 
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            z-index: 1400;
-        }
+        /* Đã xóa lớp nền mờ .sidebar-overlay theo yêu cầu */
 
         /* --- Phần Hero --- */
         .hero {
@@ -206,18 +198,16 @@
 </head>
 <body>
 
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
-
     <header id="main-header">
         <nav>
             <div class="logo">GiftDesign.</div>
             
             <ul class="nav-links" id="navLinks">
                 <span class="close-sidebar-btn" onclick="toggleMenu()">&times;</span>
-                <li><a href="#" onclick="goToSection(event, 'trangchu')">Trang chủ</a></li>
-                <li><a href="#" onclick="goToSection(event, 'dichvu')">Dịch vụ</a></li>
-                <li><a href="#" onclick="goToSection(event, 'quatang')">Quà tặng</a></li>
-                <li><a href="#" onclick="goToSection(event, 'lienhe')">Liên hệ</a></li>
+                <li><a href="#trangchu" onclick="closeMenu()">Trang chủ</a></li>
+                <li><a href="#dichvu" onclick="closeMenu()">Dịch vụ</a></li>
+                <li><a href="#quatang" onclick="closeMenu()">Quà tặng</a></li>
+                <li><a href="#lienhe" onclick="closeMenu()">Liên hệ</a></li>
             </ul>
 
             <div class="toolbar-right">
@@ -230,7 +220,7 @@
     <section id="trangchu" class="hero">
         <h1>Trao Gửi Yêu Thương Qua Từng Thiết Kế</h1>
         <p>Chúng tôi chuyên tư vấn, thiết kế độc quyền và cung cấp các giải pháp quà tặng tinh tế, ý nghĩa cho doanh nghiệp và cá nhân.</p>
-        <a href="#" onclick="goToSection(event, 'quatang')" class="btn">Khám phá ngay</a>
+        <a href="#quatang" class="btn">Khám phá ngay</a>
     </section>
 
     <section id="dichvu" class="section">
@@ -275,7 +265,7 @@
                 <div class="product-info">
                     <h4>Set Quà Tặng Sự Kiện (SLL)</h4>
                     <p class="price">Liên hệ</p>
-                    <a href="#" onclick="goToSection(event, 'lienhe')" class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Nhận tư vấn</a>
+                    <a href="#lienhe" class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Nhận tư vấn</a>
                 </div>
             </div>
         </div>
@@ -306,45 +296,19 @@
     </footer>
 
     <script>
-        // --- 1. ĐIỀU KHIỂN THANH BÊN & CUỘN TRANG (ĐÃ FIX LỖI ĐIỆN THOẠI) ---
+        // --- 1. ĐIỀU KHIỂN THANH BÊN (Đã bỏ overlay) ---
         const navLinks = document.getElementById('navLinks');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
 
+        // Nút mở/đóng menu (nút ☰ hoặc nút X)
         function toggleMenu() {
             navLinks.classList.toggle('active');
-            if(navLinks.classList.contains('active')) {
-                sidebarOverlay.style.display = 'block';
-            } else {
-                sidebarOverlay.style.display = 'none';
-            }
         }
 
-        // Hàm điều hướng siêu mượt không lo kẹt luồng xử lý di động
-        function goToSection(event, sectionId) {
-            event.preventDefault(); // Ngăn chặn cơ chế nhảy link lỗi của trình duyệt
-
-            // Bước 1: Ra lệnh đóng menu ngay lập tức để tạo cảm giác phản hồi nhanh
+        // Hàm chỉ làm nhiệm vụ đóng menu khi ấn vào link, việc cuộn trang để trình duyệt tự lo
+        function closeMenu() {
             if (window.innerWidth <= 768) {
                 navLinks.classList.remove('active');
-                sidebarOverlay.style.display = 'none';
             }
-
-            // Bước 2: Trì hoãn 200ms bằng setTimeout. 
-            // Giúp điện thoại chạy xong hiệu ứng ẩn menu, giải phóng RAM rồi mới cuộn trang
-            setTimeout(() => {
-                const targetSection = document.getElementById(sectionId);
-                if (targetSection) {
-                    const headerHeight = document.getElementById('main-header').offsetHeight;
-                    const elementPosition = targetSection.getBoundingClientRect().top;
-                    // Tính toán chuẩn xác vị trí và trừ hao độ cao của Header để không che chữ
-                    const offsetPosition = elementPosition + window.scrollY - headerHeight + 1;
-          
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                }
-            }, 200); 
         }
 
         // --- 2. LOGIC XỬ LÝ GIỎ HÀNG ---
