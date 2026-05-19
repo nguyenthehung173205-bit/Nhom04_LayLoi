@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tư vấn, Thiết kế & Quà tặng</title>
+    <title>GiftDesign - Tư vấn, Thiết kế & Quà tặng</title>
     <style>
         /* --- CSS Reset & Cơ bản --- */
+        html {
+            scroll-behavior: smooth; /* Cuộn mượt mà */
+        }
         * {
             margin: 0;
             padding: 0;
@@ -303,7 +306,7 @@
     </footer>
 
     <script>
-        // --- 1. ĐIỀU KHIỂN THANH BÊN (SIDEBAR) & CUỘN TRANG MƯỢT MÀ ---
+        // --- 1. ĐIỀU KHIỂN THANH BÊN & CUỘN TRANG (ĐÃ FIX LỖI ĐIỆN THOẠI) ---
         const navLinks = document.getElementById('navLinks');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
 
@@ -316,30 +319,32 @@
             }
         }
 
-        // Hàm chuyên biệt để xử lý chuyển trang mượt mà
+        // Hàm điều hướng siêu mượt không lo kẹt luồng xử lý di động
         function goToSection(event, sectionId) {
-            event.preventDefault(); // Ngăn chặn nhảy trang giật cục gây lỗi
+            event.preventDefault(); // Ngăn chặn cơ chế nhảy link lỗi của trình duyệt
 
-            // Đóng menu nếu đang ở trên màn hình điện thoại
+            // Bước 1: Ra lệnh đóng menu ngay lập tức để tạo cảm giác phản hồi nhanh
             if (window.innerWidth <= 768) {
                 navLinks.classList.remove('active');
                 sidebarOverlay.style.display = 'none';
             }
 
-            // Tính toán vị trí cần đến (Có trừ đi độ cao của Header để không bị che khuất)
-            const targetSection = document.getElementById(sectionId);
-            const headerHeight = document.getElementById('main-header').offsetHeight;
-            
-            if (targetSection) {
-                const elementPosition = targetSection.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.scrollY - headerHeight;
-      
-                // Ra lệnh cho trình duyệt cuộn mượt đến đích
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
-            }
+            // Bước 2: Trì hoãn 200ms bằng setTimeout. 
+            // Giúp điện thoại chạy xong hiệu ứng ẩn menu, giải phóng RAM rồi mới cuộn trang
+            setTimeout(() => {
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    const headerHeight = document.getElementById('main-header').offsetHeight;
+                    const elementPosition = targetSection.getBoundingClientRect().top;
+                    // Tính toán chuẩn xác vị trí và trừ hao độ cao của Header để không che chữ
+                    const offsetPosition = elementPosition + window.scrollY - headerHeight + 1;
+          
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            }, 200); 
         }
 
         // --- 2. LOGIC XỬ LÝ GIỎ HÀNG ---
