@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tư vấn, Thiết kế và Bán Quà tặng</title>
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/286/286350.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* --- CSS Reset & Cơ bản --- */
         html {
@@ -691,7 +692,7 @@
 
     <footer id="lienhe_footer">
         <h2>Bắt đầu dự án cùng chúng tôi ngay thôi nào!</h2>
-        <p style="margin: 15px 0;">Hotline: 0123 456 789</p>
+        <p style="margin: 15px 00;">Hotline: 0123 456 789</p>
         <p style="margin: 15px 0;">Email: SweetGift@giftdesign.vn</p>
         <p>&copy; 2026 SweetGift. Thiết kế bằng cả trái tim 💛.</p>
     </footer>
@@ -805,7 +806,13 @@
             const phone = document.getElementById('consult-phone').value;
             const email = document.getElementById('consult-email').value;
 
-            alert(`Đăng ký tư vấn thành công!\n\nThông tin của bạn:\n- Họ và tên: ${name}\n- Số điện thoại: ${phone}\n- Email: ${email}\n\nChúng tôi sẽ liên hệ lại với bạn trong vòng vài phút tới.`);
+            Swal.fire({
+                title: "Thành công!",
+                html: `Đăng ký tư vấn thành công!<br><br><b>Thông tin của bạn:</b><br>- Họ và tên: ${name}<br>- Số điện thoại: ${phone}<br>- Email: ${email}<br><br>Chúng tôi sẽ liên hệ lại với bạn trong vòng vài phút tới.`,
+                icon: "success",
+                confirmButtonColor: "#d4af37",
+                confirmButtonText: "Tuyệt vời"
+            });
 
             event.target.reset();
             closeConsultModal();
@@ -818,11 +825,30 @@
             const phone = document.getElementById('main-contact-phone').value;
             const email = document.getElementById('main-contact-email').value || "Không cung cấp";
 
-            alert(`Gửi yêu cầu liên hệ thành công!\n\nThông tin của bạn:\n- Họ và tên: ${name}\n- Số điện thoại: ${phone}\n- Email: ${email}\n\nĐội ngũ SweetGift. sẽ trực tiếp gọi điện lại để hỗ trợ bạn nhanh nhất nhé.`);
+            Swal.fire({
+                title: "Đã gửi yêu cầu!",
+                html: `Gửi yêu cầu liên hệ thành công!<br><br><b>Thông tin của bạn:</b><br>- Họ và tên: ${name}<br>- Số điện thoại: ${phone}<br>- Email: ${email}<br><br>Đội ngũ SweetGift. sẽ trực tiếp gọi điện lại để hỗ trợ bạn nhanh nhất nhé.`,
+                icon: "success",
+                confirmButtonColor: "#d4af37",
+                confirmButtonText: "Đóng"
+            });
 
             event.target.reset();
             closeContactModal();
         }
+
+        // --- Cấu hình Toast thông báo góc phải cho giỏ hàng ---
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
 
         // --- 4. LOGIC XỬ LÝ GIỎ HÀNG ---
         let cart = [];
@@ -838,7 +864,10 @@
 
                 cart.push({ name, price });
                 updateCartUI();
-                alert(`Đã thêm "${name}" vào giỏ hàng!`);
+                Toast.fire({
+                    icon: "success",
+                    title: `Đã thêm "${name}" vào giỏ hàng!`
+                });
             });
         });
 
@@ -874,11 +903,19 @@
         // --- 5. LOGIC TIẾN HÀNH ĐẶT HÀNG ---
         function checkout() {
             if (cart.length === 0) {
-                alert("Giỏ hàng của bạn đang trống!");
+                closeCartModal(); // Ẩn ngay cửa sổ giỏ hàng trước khi hiện thông báo
+
+                Swal.fire({
+                    title: "Giỏ hàng trống",
+                    text: "Bạn chưa có sản phẩm nào trong giỏ hàng. Hãy thêm sản phẩm trước khi đặt hàng nhé!",
+                    icon: "warning",
+                    confirmButtonColor: "#d4af37",
+                    confirmButtonText: "Đi mua sắm"
+                });
                 return;
             }
             closeCartModal();
-            openModal(orderInfoModal); // Gọi hàm mở modal để khóa cuộn nền
+            orderInfoModal.style.display = "block";
         }
 
         function handleOrderSubmit(event) {
@@ -891,7 +928,20 @@
             const shippingMethod = document.querySelector('input[name="shipping-method"]:checked').value;
             const totalPrice = cartTotalPrice.innerText;
 
-            alert(`🎉 ĐẶT HÀNG THÀNH CÔNG!\n\nThông tin người nhận:\n- Họ tên: ${name}\n- Số điện thoại: ${phone}\n- Email: ${email}\n- Địa chỉ giao hàng: ${address}\n- Hình thức vận chuyển: ${shippingMethod}\n- Tổng thanh toán: ${totalPrice}\n\nCảm ơn bạn! Chúng tôi sẽ gọi điện xác thực đơn hàng trong vòng vài phút tới.`);
+            Swal.fire({
+                title: "ĐẶT HÀNG THÀNH CÔNG! 🎉",
+                html: `<b>Thông tin người nhận:</b><br>
+                       - Họ tên: ${name}<br>
+                       - Số điện thoại: ${phone}<br>
+                       - Email: ${email}<br>
+                       - Địa chỉ giao hàng: ${address}<br>
+                       - Hình thức vận chuyển: ${shippingMethod}<br>
+                       - Tổng thanh toán: <b style="color:red;">${totalPrice}</b><br><br>
+                       Cảm ơn bạn! Chúng tôi sẽ gọi điện xác thực đơn hàng trong vòng vài phút tới.`,
+                icon: "success",
+                confirmButtonColor: "#d4af37",
+                confirmButtonText: "Hoàn tất"
+            });
 
             cart = [];
             updateCartUI();
