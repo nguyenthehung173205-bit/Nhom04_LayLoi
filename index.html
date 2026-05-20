@@ -549,7 +549,7 @@
                 <div class="product-info">
                     <h4>Set Quà Doanh Nhân Sang Trọng</h4>
                     <p class="price">1.500.000 VNĐ</p>
-                    <button class="btn add-to-cart" data-name="Set Quà Doanh Nhân" data-price="1500000"
+                    <button class="btn add-to-cart" data-name="Set Quà Doanh Nhân Sang Trọng" data-price="1500000"
                         style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>
                 </div>
             </div>
@@ -559,7 +559,7 @@
                 <div class="product-info">
                     <h4>Set Nến Thơm & Trà Mộc</h4>
                     <p class="price">450.000 VNĐ</p>
-                    <button class="btn add-to-cart" data-name="Set Nến & Trà" data-price="450000"
+                    <button class="btn add-to-cart" data-name="Set Nến Thơm & Trà Mộc" data-price="450000"
                         style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>
                 </div>
             </div>
@@ -678,8 +678,7 @@
                 </div>
                 <div class="form-group">
                     <label>Số điện thoại <span style="color:red;">*</span></label>
-                    <input type="tel" id="main-contact-phone" placeholder="Ví dụ: 0912345678"
-                        required>
+                    <input type="tel" id="main-contact-phone" placeholder="Ví dụ: 0912345678" required>
                 </div>
                 <div class="form-group">
                     <label>Email (Không bắt buộc)</label>
@@ -710,7 +709,7 @@
                 window.scrollTo({
                     top: 0,
                     left: 0,
-                    behavior: 'smooth' 
+                    behavior: 'smooth'
                 });
             }, 200);
         });
@@ -772,13 +771,13 @@
         // Hàm dùng chung để mở và khóa cuộn nền
         function openModal(modal) {
             modal.style.display = "block";
-            document.body.classList.add('no-scroll'); 
+            document.body.classList.add('no-scroll');
         }
 
         // Hàm dùng chung để đóng và mở khóa cuộn nền
         function closeModal(modal) {
             modal.style.display = "none";
-            document.body.classList.remove('no-scroll'); 
+            document.body.classList.remove('no-scroll');
         }
 
         cartMenuBtn.onclick = () => openModal(cartModal);
@@ -808,7 +807,7 @@
 
             Swal.fire({
                 title: "Thành công!",
-                html: `Đăng ký tư vấn thành công!<br><br><b>Thông tin của bạn:</b><br>- Họ và tên: ${name}<br>- Số điện thoại: ${phone}<br>- Email: ${email}<br><br>Chúng tôi sẽ liên hệ lại với bạn trong vòng vài phút tới.`,
+                html: `Đăng ký tư vấn thành công!<br><br><b>Thông tin của bạn:</b><br>Họ và tên: ${name}<br>Số điện thoại: ${phone}<br>Email: ${email}<br><br>Chúng tôi sẽ liên hệ lại với bạn trong vòng vài phút tới.`,
                 icon: "success",
                 confirmButtonColor: "#d4af37",
                 confirmButtonText: "Tuyệt vời"
@@ -827,7 +826,7 @@
 
             Swal.fire({
                 title: "Đã gửi yêu cầu!",
-                html: `Gửi yêu cầu liên hệ thành công!<br><br><b>Thông tin của bạn:</b><br>- Họ và tên: ${name}<br>- Số điện thoại: ${phone}<br>- Email: ${email}<br><br>Đội ngũ SweetGift. sẽ trực tiếp gọi điện lại để hỗ trợ bạn nhanh nhất nhé.`,
+                html: `Gửi yêu cầu liên hệ thành công!<br><br><b>Thông tin của bạn:</b><br>Họ và tên: ${name}<br>Số điện thoại: ${phone}<br>Email: ${email}<br><br>Đội ngũ SweetGift. sẽ trực tiếp gọi điện lại để hỗ trợ bạn nhanh nhất nhé.`,
                 icon: "success",
                 confirmButtonColor: "#d4af37",
                 confirmButtonText: "Đóng"
@@ -903,14 +902,23 @@
         // --- 5. LOGIC TIẾN HÀNH ĐẶT HÀNG ---
         function checkout() {
             if (cart.length === 0) {
-                closeCartModal(); // Ẩn ngay cửa sổ giỏ hàng trước khi hiện thông báo
-
+                closeCartModal();
                 Swal.fire({
                     title: "Giỏ hàng trống",
                     text: "Bạn chưa có sản phẩm nào trong giỏ hàng. Hãy thêm sản phẩm trước khi đặt hàng nhé!",
                     icon: "warning",
                     confirmButtonColor: "#d4af37",
                     confirmButtonText: "Đi mua sắm"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Đợi 300ms để hiệu ứng tắt SweetAlert hoàn tất rồi mới cuộn trang
+                        setTimeout(() => {
+                            const targetSection = document.getElementById("quatang");
+                            if (targetSection) {
+                                targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                            }
+                        }, 300);
+                    }
                 });
                 return;
             }
@@ -927,20 +935,89 @@
             const address = document.getElementById('order-address').value;
             const shippingMethod = document.querySelector('input[name="shipping-method"]:checked').value;
             const totalPrice = cartTotalPrice.innerText;
+            const currentCartData = [...cart];
+
+            // Nhóm sản phẩm lại để tính số lượng cụ thể từng món
+            const invoiceItems = {};
+            currentCartData.forEach(item => {
+                if (invoiceItems[item.name]) {
+                    invoiceItems[item.name].quantity += 1;
+                } else {
+                    invoiceItems[item.name] = { price: item.price, quantity: 1 };
+                }
+            });
 
             Swal.fire({
                 title: "ĐẶT HÀNG THÀNH CÔNG! 🎉",
                 html: `<b>Thông tin người nhận:</b><br>
-                       - Họ tên: ${name}<br>
-                       - Số điện thoại: ${phone}<br>
-                       - Email: ${email}<br>
-                       - Địa chỉ giao hàng: ${address}<br>
-                       - Hình thức vận chuyển: ${shippingMethod}<br>
-                       - Tổng thanh toán: <b style="color:red;">${totalPrice}</b><br><br>
+                       Họ tên: ${name}<br>
+                       Số điện thoại: ${phone}<br>
+                       Email: ${email}<br>
+                       Địa chỉ giao hàng: ${address}<br>
+                       Hình thức vận chuyển: ${shippingMethod}<br>
+                       Tổng thanh toán: <b style="color:red;">${totalPrice}</b><br><br>
                        Cảm ơn bạn! Chúng tôi sẽ gọi điện xác thực đơn hàng trong vòng vài phút tới.`,
                 icon: "success",
+                showDenyButton: true,
                 confirmButtonColor: "#d4af37",
-                confirmButtonText: "Hoàn tất"
+                denyButtonColor: "#444",
+                confirmButtonText: "Đóng",
+                denyButtonText: "Xem hóa đơn 📄"
+            }).then((result) => {
+                if (result.isDenied) {
+                    // Xây dựng giao diện bảng hóa đơn chi tiết bằng HTML mẫu
+                    let invoiceHtml = `
+                        <div style="text-align: left; font-size: 0.95rem; line-height: 1.5; color:#444;">
+                            <p style="margin-bottom: 5px;"><b>Mã hóa đơn:</b> #SG-${Math.floor(100000 + Math.random() * 900000)}</p>
+                            <p style="margin-bottom: 5px;"><b>Khách nhận:</b> ${name}</p>
+                            <p style="margin-bottom: 5px;"><b>Số điện thoại:</b> ${phone}</p>
+                            <p style="margin-bottom: 5px;"><b>Địa chỉ:</b> ${address}</p>
+                            <p style="margin-bottom: 5px;"><b>Vận chuyển:</b> ${shippingMethod}</p>
+                            <hr style="margin: 15px 0; border: 0; border-top: 1px dashed #ccc;">
+                            
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid #ddd; text-align: left; font-weight: bold;">
+                                        <th style="padding: 8px 0;">Sản phẩm</th>
+                                        <th style="padding: 8px 0; text-align: center; width: 50px;">SL</th>
+                                        <th style="padding: 8px 0; text-align: right; width: 110px;">Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    `;
+
+                    // Duyệt qua các món đã gộp để in ra từng dòng
+                    for (const [itemName, details] of Object.entries(invoiceItems)) {
+                        const itemTotal = details.price * details.quantity;
+                        invoiceHtml += `
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 8px 0;">${itemName}</td>
+                                <td style="padding: 8px 0; text-align: center;">${details.quantity}</td>
+                                <td style="padding: 8px 0; text-align: right;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                            </tr>
+                        `;
+                    }
+
+                    invoiceHtml += `
+                                </tbody>
+                            </table>
+                            <hr style="margin: 15px 0; border: 0; border-top: 2px solid #333;">
+                            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; color:#222;">
+                                <span>Tổng tiền toán:</span>
+                                <span style="color: #e74c3c;">${totalPrice}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    // Bật cửa sổ Modal Hóa đơn lên cho người dùng xem
+                    Swal.fire({
+                        title: "HÓA ĐƠN CHI TIẾT",
+                        html: invoiceHtml,
+                        icon: "info",
+                        confirmButtonColor: "#d4af37",
+                        confirmButtonText: "Xác nhận & Đóng"
+                    });
+                }
             });
 
             cart = [];
