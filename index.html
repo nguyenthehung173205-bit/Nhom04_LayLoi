@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,32 +11,40 @@
             scroll-behavior: smooth;
             scroll-padding-top: 90px;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-tap-highlight-color: transparent; /* Xóa ô vuông xanh khi chạm trên điện thoại */
+            -webkit-tap-highlight-color: transparent;
+            /* Xóa ô vuông xanh khi chạm trên điện thoại */
         }
+
         body {
             line-height: 1.6;
             color: #333;
             background-color: #f9f9f9;
         }
+
         a {
             text-decoration: none;
             color: inherit;
         }
 
         /* Loại bỏ viền xanh mặc định của trình duyệt khi click hoặc giữ phím */
-        button:focus, a:focus, input:focus, select:focus, textarea:focus {
+        button:focus,
+        a:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
             outline: none !important;
         }
 
         /* KHẮC PHỤC LỖI NỀN XANH KHI TRÌNH DUYỆT TỰ ĐỘNG ĐIỀN (AUTOFILL) */
         input:-webkit-autofill,
-        input:-webkit-autofill:hover, 
-        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
         input:-webkit-autofill:active {
             -webkit-box-shadow: 0 0 0 30px white inset !important;
             -webkit-text-fill-color: #333 !important;
@@ -43,10 +52,10 @@
         }
 
         /* HIỆU ỨNG LÀM MỜ CHUYÊN NGHIỆP KHI BẤM (ACTIVE STATE) */
-        .btn:active, 
-        #cart-menu-btn:active, 
-        .close-btn:active, 
-        .menu-toggle-btn:active, 
+        .btn:active,
+        #cart-menu-btn:active,
+        .close-btn:active,
+        .menu-toggle-btn:active,
         .nav-links li a:active,
         .close-sidebar-btn:active {
             opacity: 0.7 !important;
@@ -56,13 +65,16 @@
         /* --- Thanh Điều hướng (Header) --- */
         header {
             background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000; /* Nằm dưới Overlay (1400) */
-            transition: 0.3s; /* Hiệu ứng chuyển cảnh khi mờ đi */
+            z-index: 1000;
+            /* Nằm dưới Overlay (1400) */
+            transition: 0.3s;
+            /* Hiệu ứng chuyển cảnh khi mờ đi */
         }
+
         nav {
             display: flex;
             justify-content: space-between;
@@ -71,26 +83,30 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .logo {
             font-size: 24px;
             font-weight: bold;
             color: #d4af37;
         }
-        
+
         .nav-links {
             list-style: none;
             display: flex;
             gap: 25px;
             align-items: center;
         }
+
         .nav-links li a {
             font-weight: 500;
             transition: color 0.3s;
             cursor: pointer;
         }
+
         .nav-links li a:hover {
             color: #d4af37;
         }
+
         .close-sidebar-btn {
             display: none;
         }
@@ -100,6 +116,7 @@
             align-items: center;
             gap: 15px;
         }
+
         #cart-menu-btn {
             background: #f4f4f4;
             padding: 8px 15px;
@@ -111,11 +128,12 @@
             align-items: center;
             gap: 5px;
         }
+
         #cart-menu-btn:hover {
             background: #d4af37;
             color: #fff;
         }
-        
+
         .menu-toggle-btn {
             display: none;
             font-size: 24px;
@@ -125,7 +143,7 @@
 
         /* --- Phần Hero --- */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -135,8 +153,18 @@
             color: white;
             padding: 0 20px;
         }
-        .hero h1 { font-size: 3rem; margin-bottom: 20px; }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
         .btn {
             padding: 12px 30px;
             background-color: #d4af37;
@@ -148,7 +176,10 @@
             transition: background 0.3s, opacity 0.2s;
             display: inline-block;
         }
-        .btn:hover { background-color: #b5952f; }
+
+        .btn:hover {
+            background-color: #b5952f;
+        }
 
         /* --- Các Section chung --- */
         .section {
@@ -157,62 +188,206 @@
             margin: 0 auto;
             text-align: center;
         }
-        .section-title { font-size: 2.2rem; margin-bottom: 40px; color: #222; }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: #222;
+        }
 
         /* Dịch vụ */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .service-card { background: white; padding: 40px 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
-        .service-card:hover { transform: translateY(-10px); }
-        .service-card h3 { margin: 15px 0; color: #d4af37; }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card h3 {
+            margin: 15px 0;
+            color: #d4af37;
+        }
 
         /* Sản phẩm */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .product-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .product-img { width: 100%; height: 200px; background-color: #ddd; object-fit: cover; }
-        .product-info { padding: 20px; }
-        .price { color: #e74c3c; font-weight: bold; font-size: 1.2rem; margin: 10px 0; }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
 
         /* --- CẤU HÌNH CỬA SỔ MODAL CHUNG --- */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); overflow-y: auto; }
-        .modal-content { background-color: #fff; margin: 5% auto; padding: 30px; border-radius: 10px; width: 90%; max-width: 500px; position: relative; text-align: left; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-        .close-btn { position: absolute; right: 20px; top: 20px; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa; transition: 0.2s; }
-        .close-btn:hover { color: #333; }
-        .cart-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0; }
-        .cart-total-section { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-top: 20px; padding-top: 20px; border-top: 2px solid #333; }
-        .checkout-btn { width: 100%; margin-top: 20px; font-size: 1.1rem; padding: 15px; text-align: center; }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            text-align: left;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .cart-total-section {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #333;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            padding: 15px;
+            text-align: center;
+        }
 
         /* --- CSS FORM TRONG MODAL --- */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.95rem; color: #444; }
-        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; outline: none; transition: border 0.3s; }
-        .form-group input:focus { border-color: #d4af37; }
-        .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
-        .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: normal; }
-        .radio-option input { width: auto; cursor: pointer; }
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #d4af37;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .radio-option input {
+            width: auto;
+            cursor: pointer;
+        }
 
         /* --- FOOTER / LIÊN HỆ DƯỚI CÙNG --- */
-        footer { 
-            background-color: #222; 
-            color: white; 
-            text-align: center; 
-            padding: 30px 20px; 
-            margin-top: 40px; 
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
         }
 
         /* --- LỚP NỀN MỜ CHO MENU ĐIỆN THOẠI --- */
         .menu-overlay {
             display: none;
             position: fixed;
-            top: 0; 
+            top: 0;
             left: 0;
-            width: 100%; 
+            width: 100%;
             height: 100vh;
-            background-color: rgba(0,0,0,0.6); 
-            backdrop-filter: blur(2px); 
-            z-index: 1400; 
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
+            z-index: 1400;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
         .menu-overlay.active {
             display: block;
             opacity: 1;
@@ -220,9 +395,17 @@
 
         /* --- CẤU HÌNH GIAO DIỆN TRÊN ĐIỆN THOẠI --- */
         @media (max-width: 768px) {
-            nav { padding: 15px 20px; }
-            .menu-toggle-btn { display: block; }
-            .cart-text { display: none; }
+            nav {
+                padding: 15px 20px;
+            }
+
+            .menu-toggle-btn {
+                display: block;
+            }
+
+            .cart-text {
+                display: none;
+            }
 
             .nav-links {
                 position: fixed;
@@ -231,38 +414,74 @@
                 width: 260px;
                 height: 100vh;
                 background-color: #fff;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: flex-start;
                 padding: 30px 20px;
                 gap: 0;
                 transition: right 0.3s ease-in-out;
-                z-index: 1500; 
+                z-index: 1500;
             }
 
-            .nav-links.active { right: 0; }
-            .nav-links li { width: 100%; border-bottom: 1px solid #eee; }
-            .nav-links li a { display: block; padding: 15px 0; font-size: 1.1rem; color: #333; }
-            
-            .close-sidebar-btn { display: block; font-size: 30px; cursor: pointer; align-self: flex-end; margin-bottom: 20px; color: #999; }
+            .nav-links.active {
+                right: 0;
+            }
 
-            .hero h1 { font-size: 1.8rem; }
-            .hero p { font-size: 1rem; }
-            .section { padding: 40px 15px; }
-            .section-title { font-size: 1.8rem; margin-bottom: 25px; }
-            .modal-content { margin: 15% auto; padding: 20px; }
+            .nav-links li {
+                width: 100%;
+                border-bottom: 1px solid #eee;
+            }
+
+            .nav-links li a {
+                display: block;
+                padding: 15px 0;
+                font-size: 1.1rem;
+                color: #333;
+            }
+
+            .close-sidebar-btn {
+                display: block;
+                font-size: 30px;
+                cursor: pointer;
+                align-self: flex-end;
+                margin-bottom: 20px;
+                color: #999;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 40px 15px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 25px;
+            }
+
+            .modal-content {
+                margin: 15% auto;
+                padding: 20px;
+            }
 
             /* --- VÔ HIỆU HÓA HOÀN TOÀN THANH CÔNG CỤ KHI MENU MỞ --- */
             body.menu-open #main-header nav .logo,
             body.menu-open #main-header nav .toolbar-right {
-                filter: brightness(0.6) blur(2px); 
-                pointer-events: none; 
+                filter: brightness(0.6) blur(2px);
+                pointer-events: none;
                 transition: 0.3s;
             }
         }
     </style>
 </head>
+
 <body>
 
     <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
@@ -288,7 +507,8 @@
 
     <section id="trangchu" class="hero">
         <h1>Trao Gửi Yêu Thương Qua Từng Thiết Kế</h1>
-        <p>Chúng tôi chuyên tư vấn, thiết kế độc quyền và cung cấp các giải pháp quà tặng tinh tế, ý nghĩa cho doanh nghiệp và cá nhân.</p>
+        <p>Chúng tôi chuyên tư vấn, thiết kế độc quyền và cung cấp các giải pháp quà tặng tinh tế, ý nghĩa cho doanh
+            nghiệp và cá nhân.</p>
         <a href="#quatang" class="btn">Khám phá ngay</a>
     </section>
 
@@ -297,15 +517,18 @@
         <div class="services-grid">
             <div class="service-card">
                 <h3>Tư Vấn Quà Tặng</h3>
-                <p>Lắng nghe câu chuyện của bạn để đề xuất những món quà phù hợp nhất với ngân sách và thông điệp bạn muốn truyền tải.</p>
+                <p>Lắng nghe câu chuyện của bạn để đề xuất những món quà phù hợp nhất với ngân sách và thông điệp bạn
+                    muốn truyền tải.</p>
             </div>
             <div class="service-card">
                 <h3>Thiết Kế Độc Quyền</h3>
-                <p>Thiết kế bao bì, thiệp mừng và cá nhân hóa quà tặng mang đậm dấu ấn cá nhân hoặc nhận diện thương hiệu doanh nghiệp.</p>
+                <p>Thiết kế bao bì, thiệp mừng và cá nhân hóa quà tặng mang đậm dấu ấn cá nhân hoặc nhận diện thương
+                    hiệu doanh nghiệp.</p>
             </div>
             <div class="service-card">
                 <h3>Cung Cấp Số Lượng Lớn</h3>
-                <p>Giải pháp quà tặng trọn gói cho sự kiện, hội nghị, tri ân khách hàng với chất lượng cao và tiến độ đảm bảo.</p>
+                <p>Giải pháp quà tặng trọn gói cho sự kiện, hội nghị, tri ân khách hàng với chất lượng cao và tiến độ
+                    đảm bảo.</p>
             </div>
         </div>
     </section>
@@ -314,27 +537,33 @@
         <h2 class="section-title">Quà Tặng Nổi Bật</h2>
         <div class="products-grid">
             <div class="product-card">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5be456155546499.6356d88b79c7f.jpg" alt="Hộp quà cao cấp" class="product-img">
+                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5be456155546499.6356d88b79c7f.jpg"
+                    alt="Hộp quà cao cấp" class="product-img">
                 <div class="product-info">
                     <h4>Set Quà Doanh Nhân Sang Trọng</h4>
                     <p class="price">1.500.000 VNĐ</p>
-                    <button class="btn add-to-cart" data-name="Set Quà Doanh Nhân" data-price="1500000" style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>
+                    <button class="btn add-to-cart" data-name="Set Quà Doanh Nhân" data-price="1500000"
+                        style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>
                 </div>
             </div>
             <div class="product-card">
-                <img src="https://djatgo.id/wp-content/uploads/2023/10/Hampers-Lilin-Aroma-e1698640511678.jpg" alt="Quà tặng cá nhân hóa" class="product-img">
+                <img src="https://djatgo.id/wp-content/uploads/2023/10/Hampers-Lilin-Aroma-e1698640511678.jpg"
+                    alt="Quà tặng cá nhân hóa" class="product-img">
                 <div class="product-info">
                     <h4>Set Nến Thơm & Trà Mộc</h4>
                     <p class="price">450.000 VNĐ</p>
-                    <button class="btn add-to-cart" data-name="Set Nến & Trà" data-price="450000" style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>
+                    <button class="btn add-to-cart" data-name="Set Nến & Trà" data-price="450000"
+                        style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>
                 </div>
             </div>
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Hộp quà sự kiện" class="product-img">
+                <img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
+                    alt="Hộp quà sự kiện" class="product-img">
                 <div class="product-info">
                     <h4>Set Quà Tặng Sự Kiện (SLL)</h4>
                     <p class="price">Liên hệ</p>
-                    <button class="btn" onclick="openConsultModal()" style="padding: 8px 15px; font-size: 0.9rem;">Nhận tư vấn</button>
+                    <button class="btn" onclick="openConsultModal()" style="padding: 8px 15px; font-size: 0.9rem;">Nhận
+                        tư vấn</button>
                 </div>
             </div>
         </div>
@@ -344,7 +573,7 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeCartModal()">&times;</span>
             <h2 style="margin-bottom: 10px;">Giỏ hàng của bạn</h2>
-            
+
             <div id="cart-items-container">
                 <p>Giỏ hàng đang trống.</p>
             </div>
@@ -414,7 +643,8 @@
                         </label>
                     </div>
                 </div>
-                <button type="submit" class="btn checkout-btn" style="margin-top: 10px;">Xác nhận hoàn tất đơn hàng</button>
+                <button type="submit" class="btn checkout-btn" style="margin-top: 10px;">Xác nhận hoàn tất đơn
+                    hàng</button>
             </form>
         </div>
     </div>
@@ -423,15 +653,17 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeContactModal()">&times;</span>
             <h2 style="margin-bottom: 15px; color: #d4af37; text-align: center;">Thông tin liên hệ</h2>
-            
-            <div style="background: #fdfbf7; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #d4af37; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+
+            <div
+                style="background: #fdfbf7; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #d4af37; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                 <p style="margin-bottom: 8px;"><strong>🏢 Doanh nghiệp:</strong> SweetGift.</p>
                 <p style="margin-bottom: 8px;"><strong>📞 Điện thoại:</strong> 0123 456 789</p>
                 <p style="margin-bottom: 8px;"><strong>📧 Email:</strong> Nhom04_LayLoi_DMST@giftdesign.vn</p>
                 <p><strong>📍 Địa chỉ:</strong> 123 Đường ABC, Quận XYZ, TP. Hà Nội</p>
             </div>
 
-            <h3 style="margin-bottom: 15px; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 10px;">Bạn có thể để lại thông tin để nhận tư vấn thêm</h3>
+            <h3 style="margin-bottom: 15px; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 10px;">Bạn
+                có thể để lại thông tin để nhận tư vấn thêm</h3>
             <form onsubmit="handleMainContactSubmit(event)">
                 <div class="form-group">
                     <label>Họ và tên của bạn <span style="color:red;">*</span></label>
@@ -439,7 +671,8 @@
                 </div>
                 <div class="form-group">
                     <label>Số điện thoại <span style="color:red;">*</span></label>
-                    <input type="tel" id="main-contact-phone" placeholder="Nhập số điện thoại để chúng tôi gọi lại..." required>
+                    <input type="tel" id="main-contact-phone" placeholder="Nhập số điện thoại để chúng tôi gọi lại..."
+                        required>
                 </div>
                 <div class="form-group">
                     <label>Email (Không bắt buộc)</label>
@@ -457,6 +690,19 @@
     </footer>
 
     <script>
+        // Ép trình duyệt luôn tải lại trang ở vị trí trên cùng
+        window.addEventListener('beforeunload', function () {
+            window.scrollTo(0, 0);
+        });
+
+        window.addEventListener('load', function () {
+            // Tắt tính năng tự động nhớ vị trí cuộn mặc định của trình duyệt
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            // Đảm bảo cuộn lên tọa độ trên cùng (x:0, y:0)
+            window.scrollTo(0, 0);
+        });
         // --- 1. ĐIỀU KHIỂN THANH BÊN & OVERLAY ---
         const navLinks = document.getElementById('navLinks');
         const menuOverlay = document.getElementById('menuOverlay');
@@ -468,7 +714,7 @@
                     desktopMenuContainer.appendChild(navLinks);
                     document.body.classList.remove('menu-open');
                     navLinks.classList.remove('active');
-                    if(menuOverlay) menuOverlay.classList.remove('active');
+                    if (menuOverlay) menuOverlay.classList.remove('active');
                 }
             } else {
                 if (!document.body.contains(navLinks) || desktopMenuContainer.contains(navLinks)) {
@@ -487,7 +733,7 @@
                     closeMenu();
                 } else {
                     navLinks.classList.add('active');
-                    if(menuOverlay) menuOverlay.classList.add('active');
+                    if (menuOverlay) menuOverlay.classList.add('active');
                     document.body.classList.add('menu-open');
                 }
             }
@@ -496,7 +742,7 @@
         function closeMenu() {
             if (window.innerWidth <= 768) {
                 navLinks.classList.remove('active');
-                if(menuOverlay) menuOverlay.classList.remove('active');
+                if (menuOverlay) menuOverlay.classList.remove('active');
                 document.body.classList.remove('menu-open');
             }
         }
@@ -505,7 +751,7 @@
         const cartModal = document.getElementById('cart-modal');
         const consultModal = document.getElementById('consult-modal');
         const orderInfoModal = document.getElementById('order-info-modal');
-        const contactMainModal = document.getElementById('contact-main-modal'); 
+        const contactMainModal = document.getElementById('contact-main-modal');
         const cartMenuBtn = document.getElementById('cart-menu-btn');
 
         cartMenuBtn.onclick = () => cartModal.style.display = "block";
@@ -519,37 +765,37 @@
         function openContactModal() { contactMainModal.style.display = "block"; }
         function closeContactModal() { contactMainModal.style.display = "none"; }
 
-        window.onclick = (event) => { 
-            if (event.target == cartModal) cartModal.style.display = "none"; 
-            if (event.target == consultModal) consultModal.style.display = "none"; 
-            if (event.target == orderInfoModal) orderInfoModal.style.display = "none"; 
-            if (event.target == contactMainModal) contactMainModal.style.display = "none"; 
+        window.onclick = (event) => {
+            if (event.target == cartModal) cartModal.style.display = "none";
+            if (event.target == consultModal) consultModal.style.display = "none";
+            if (event.target == orderInfoModal) orderInfoModal.style.display = "none";
+            if (event.target == contactMainModal) contactMainModal.style.display = "none";
         }
 
         // --- 3. XỬ LÝ DỮ LIỆU ĐĂNG KÝ (TƯ VẤN SẢN PHẨM) - IN ĐẦY ĐỦ ---
         function handleConsultSubmit(event) {
-            event.preventDefault(); 
+            event.preventDefault();
             const name = document.getElementById('consult-name').value;
             const phone = document.getElementById('consult-phone').value;
             const email = document.getElementById('consult-email').value;
 
             alert(`Đăng ký tư vấn thành công!\n\nThông tin của bạn:\n- Họ và tên: ${name}\n- Số điện thoại: ${phone}\n- Email: ${email}\n\nChúng tôi sẽ liên hệ lại với bạn trong vòng vài phút tới.`);
-            
-            event.target.reset(); 
-            closeConsultModal(); 
+
+            event.target.reset();
+            closeConsultModal();
         }
 
         // --- XỬ LÝ DỮ LIỆU YÊU CẦU LIÊN HỆ TỔNG HỢP - IN ĐẦY ĐỦ ---
         function handleMainContactSubmit(event) {
-            event.preventDefault(); 
+            event.preventDefault();
             const name = document.getElementById('main-contact-name').value;
             const phone = document.getElementById('main-contact-phone').value;
             const email = document.getElementById('main-contact-email').value || "Không cung cấp";
-            
+
             alert(`Gửi yêu cầu liên hệ thành công!\n\nThông tin của bạn:\n- Họ và tên: ${name}\n- Số điện thoại: ${phone}\n- Email: ${email}\n\nĐội ngũ SweetGift. sẽ trực tiếp gọi điện lại để hỗ trợ bạn nhanh nhất nhé.`);
-            
-            event.target.reset(); 
-            closeContactModal(); 
+
+            event.target.reset();
+            closeContactModal();
         }
 
         // --- 4. LOGIC XỬ LÝ GIỎ HÀNG ---
@@ -560,10 +806,10 @@
 
         const addButtons = document.querySelectorAll('.add-to-cart');
         addButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const name = this.getAttribute('data-name');
                 const price = parseInt(this.getAttribute('data-price'));
-                
+
                 cart.push({ name, price });
                 updateCartUI();
                 alert(`Đã thêm "${name}" vào giỏ hàng!`);
@@ -617,15 +863,16 @@
             const email = document.getElementById('order-email').value;
             const address = document.getElementById('order-address').value;
             const shippingMethod = document.querySelector('input[name="shipping-method"]:checked').value;
-            const totalPrice = cartTotalPrice.innerText; 
+            const totalPrice = cartTotalPrice.innerText;
 
             alert(`🎉 ĐẶT HÀNG THÀNH CÔNG!\n\nThông tin người nhận:\n- Họ tên: ${name}\n- Số điện thoại: ${phone}\n- Email: ${email}\n- Địa chỉ giao hàng: ${address}\n- Hình thức vận chuyển: ${shippingMethod}\n- Tổng thanh toán: ${totalPrice}\n\nCảm ơn bạn! Chúng tôi sẽ gọi điện xác thực đơn hàng trong vòng vài phút tới.`);
 
-            cart = []; 
-            updateCartUI(); 
-            event.target.reset(); 
-            closeOrderModal(); 
+            cart = [];
+            updateCartUI();
+            event.target.reset();
+            closeOrderModal();
         }
     </script>
 </body>
+
 </html>
