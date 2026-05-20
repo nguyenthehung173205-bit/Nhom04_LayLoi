@@ -690,19 +690,23 @@
     </footer>
 
     <script>
-        // Ép trình duyệt luôn tải lại trang ở vị trí trên cùng
-        window.addEventListener('beforeunload', function () {
-            window.scrollTo(0, 0);
+        window.addEventListener('load', function () {
+            // 1. Cho phép trình duyệt nhớ lại vị trí cũ khi tải lại trang
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'auto';
+            }
+
+            // 2. Dùng setTimeout tạo một độ trễ rất nhỏ (100 mili-giây) 
+            // để đợi trình duyệt khôi phục xong vị trí cũ, sau đó mới kích hoạt cuộn mượt lên đầu
+            setTimeout(function () {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth' // Đây là lệnh tạo hiệu ứng cuộn từ từ
+                });
+            }, 200);
         });
 
-        window.addEventListener('load', function () {
-            // Tắt tính năng tự động nhớ vị trí cuộn mặc định của trình duyệt
-            if ('scrollRestoration' in history) {
-                history.scrollRestoration = 'manual';
-            }
-            // Đảm bảo cuộn lên tọa độ trên cùng (x:0, y:0)
-            window.scrollTo(0, 0);
-        });
         // --- 1. ĐIỀU KHIỂN THANH BÊN & OVERLAY ---
         const navLinks = document.getElementById('navLinks');
         const menuOverlay = document.getElementById('menuOverlay');
