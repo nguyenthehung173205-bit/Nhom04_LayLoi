@@ -648,6 +648,22 @@
                 <p>Giỏ hàng đang trống.</p>
             </div>
 
+            <div
+                style="margin-top: 20px; padding: 12px 15px; background: #fdfbf7; border-left: 4px solid #d4af37; border-radius: 4px; font-size: 0.9rem; line-height: 1.5; color: #444; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <span style="font-weight: bold; color: #d4af37; display: block; margin-bottom: 6px;">📦 Phí vận chuyển
+                    tham khảo:</span>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <div>• <b>Nội thành:</b> Miễn phí (Thường) | 50.000 VNĐ (Hỏa tốc)</div>
+                    <div>• <b>Ngoại thành:</b> 50.000 VNĐ (Thường) | 80.000 VNĐ (Hỏa tốc)</div>
+                    <div>• <b>Các tỉnh khác:</b> 100.000 VNĐ (Thường) | 150.000 VNĐ (Hỏa tốc - chỉ với các tỉnh lân cận)
+                    </div>
+                </div>
+                <p
+                    style="margin-top: 8px; font-style: italic; color: #777; font-size: 0.82rem; border-top: 1px dashed #ddd; padding-top: 6px;">
+                    * Lưu ý: Đây là mức giá tham khảo. Quý khách có thể liên hệ trực tiếp với chúng tôi để nhận thông
+                    tin chi tiết thêm.
+                </p>
+            </div>
             <div class="cart-total-section">
                 <span>Tổng cộng:</span>
                 <span id="cart-total-price">0 VNĐ</span>
@@ -701,7 +717,8 @@
                     <input type="text" id="order-address" placeholder="Số nhà, tên đường, phường, quận, TP..." required>
                 </div>
                 <div class="form-group">
-                    <label>Hình thức vận chuyển (Phí ship tùy theo khu vực và loại hình vận chuyển) <span style="color:red;">*</span></label>
+                    <label>Hình thức vận chuyển (Phí ship tùy theo khu vực và loại hình vận chuyển) <span
+                            style="color:red;">*</span></label>
                     <div class="radio-group">
                         <label class="radio-option">
                             <input type="radio" name="shipping-method" value="Giao hàng bình thường" checked>
@@ -954,7 +971,7 @@
                         <div style="flex: 1;">
                             <span style="font-weight: 500;">${item.name}</span>
                             <div style="font-size: 0.85rem; color: #777; margin-top: 8px; display: flex; align-items: center; gap: 12px;">
-                                <span>${item.price.toLocaleString('vi-VN')} đ</span>
+                                <span>${item.price.toLocaleString('vi-VN')} VNĐ</span>
                                 
                                 <div style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; height: 26px;">
                                     <button onclick="decreaseQuantity(${index})" style="width: 26px; height: 100%; background: #f9f9f9; border: none; border-right: 1px solid #ddd; cursor: pointer; font-weight: bold; color: #555;">-</button>
@@ -965,7 +982,7 @@
                             </div>
                         </div>
                         <div style="font-weight: 500;">
-                            ${itemTotal.toLocaleString('vi-VN')} đ 
+                            ${itemTotal.toLocaleString('vi-VN')} VNĐ 
                             <span style="color:red; cursor:pointer; margin-left:15px; font-weight:bold; font-size: 1.2rem;" title="Xóa sản phẩm" onclick="removeItem(${index})">&times;</span>
                         </div>
                     </div>
@@ -1076,7 +1093,7 @@
                             <tr style="border-bottom: 1px solid #eee;">
                                 <td style="padding: 8px 0;">${item.name}</td>
                                 <td style="padding: 8px 0; text-align: center;">${item.quantity}</td>
-                                <td style="padding: 8px 0; text-align: right;">${itemTotal.toLocaleString('vi-VN')} đ</td>
+                                <td style="padding: 8px 0; text-align: right;">${itemTotal.toLocaleString('vi-VN')} VNĐ</td>
                             </tr>
                         `;
                     });
