@@ -632,7 +632,7 @@
                 <div class="product-info">
                     <h4>Set Quà Tặng Sự Kiện (SLL)</h4>
                     <p class="price">Liên hệ</p>
-                    <button class="btn" onclick="openConsultModal()" style="padding: 8px 15px; font-size: 0.9rem;">Nhận
+                    <button class="btn" onclick="openContactModal()" style="padding: 8px 15px; font-size: 0.9rem;">Nhận
                         tư vấn</button>
                 </div>
             </div>
@@ -670,28 +670,6 @@
             </div>
 
             <button class="btn checkout-btn" onclick="checkout()">Tiến hành Đặt hàng</button>
-        </div>
-    </div>
-
-    <div id="consult-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeConsultModal()">&times;</span>
-            <h2 style="margin-bottom: 20px; color: #d4af37;">Đăng ký tư vấn quà tặng</h2>
-            <form onsubmit="handleConsultSubmit(event)">
-                <div class="form-group">
-                    <label>Họ và tên <span style="color:red;">*</span></label>
-                    <input type="text" id="consult-name" placeholder="Ví dụ: Nguyễn Văn A" required>
-                </div>
-                <div class="form-group">
-                    <label>Số điện thoại <span style="color:red;">*</span></label>
-                    <input type="tel" id="consult-phone" placeholder="Ví dụ: 0912345678" required>
-                </div>
-                <div class="form-group">
-                    <label>Địa chỉ Email <span style="color:red;">*</span></label>
-                    <input type="email" id="consult-email" placeholder="Ví dụ: name@example.com" required>
-                </div>
-                <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Gửi thông tin đăng ký</button>
-            </form>
         </div>
     </div>
 
@@ -750,7 +728,7 @@
             </div>
 
             <h3 style="margin-bottom: 15px; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 10px;">Bạn
-                có thể để lại thông tin để nhận tư vấn thêm</h3>
+                vui lòng điền thông tin để nhận tư vấn</h3>
             <form onsubmit="handleMainContactSubmit(event)">
                 <div class="form-group">
                     <label>Họ và tên của bạn <span style="color:red;">*</span></label>
@@ -761,8 +739,8 @@
                     <input type="tel" id="main-contact-phone" placeholder="Ví dụ: 0912345678" required>
                 </div>
                 <div class="form-group">
-                    <label>Email (Không bắt buộc)</label>
-                    <input type="email" id="main-contact-email" placeholder="Ví dụ: name@example.com">
+                    <label>Địa chỉ Email <span style="color:red;">*</span></label>
+                    <input type="email" id="main-contact-email" placeholder="Ví dụ: name@example.com" required>
                 </div>
                 <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Gửi yêu cầu liên hệ</button>
             </form>
@@ -843,7 +821,6 @@
 
         // --- 2. LOGIC QUẢN LÝ CÁC CỬA SỔ MODAL (ĐÃ KHÓA CUỘN NỀN) ---
         const cartModal = document.getElementById('cart-modal');
-        const consultModal = document.getElementById('consult-modal');
         const orderInfoModal = document.getElementById('order-info-modal');
         const contactMainModal = document.getElementById('contact-main-modal');
         const cartMenuBtn = document.getElementById('cart-menu-btn');
@@ -854,9 +831,6 @@
         cartMenuBtn.onclick = () => { cartModal.style.display = "block"; lockScroll(); }
         function closeCartModal() { cartModal.style.display = "none"; unlockScroll(); }
 
-        function openConsultModal() { consultModal.style.display = "block"; lockScroll(); }
-        function closeConsultModal() { consultModal.style.display = "none"; unlockScroll(); }
-
         function openOrderModal() { orderInfoModal.style.display = "block"; lockScroll(); }
         function closeOrderModal() { orderInfoModal.style.display = "none"; unlockScroll(); }
 
@@ -865,28 +839,8 @@
 
         window.onclick = (event) => {
             if (event.target == cartModal) closeCartModal();
-            if (event.target == consultModal) closeConsultModal();
             if (event.target == orderInfoModal) closeOrderModal();
             if (event.target == contactMainModal) closeContactModal();
-        }
-
-        // --- 3. XỬ LÝ DỮ LIỆU ĐĂNG KÝ (TƯ VẤN SẢN PHẨM) ---
-        function handleConsultSubmit(event) {
-            event.preventDefault();
-            const name = document.getElementById('consult-name').value;
-            const phone = document.getElementById('consult-phone').value;
-            const email = document.getElementById('consult-email').value;
-
-            Swal.fire({
-                title: "Thành công!",
-                html: `Đăng ký tư vấn thành công!<br><br><b>Thông tin của bạn:</b><br>Họ và tên: ${name}<br>Số điện thoại: ${phone}<br>Email: ${email}<br><br>Chúng tôi sẽ liên hệ lại với bạn trong vòng vài phút tới.`,
-                icon: "success",
-                confirmButtonColor: "#d4af37",
-                confirmButtonText: "Đóng"
-            });
-
-            event.target.reset();
-            closeConsultModal();
         }
 
         // --- XỬ LÝ DỮ LIỆU YÊU CẦU LIÊN HỆ TỔNG HỢP ---
