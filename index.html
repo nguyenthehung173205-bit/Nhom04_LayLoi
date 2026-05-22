@@ -145,7 +145,7 @@
 
         /* --- Phần Hero --- */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://png.pngtree.com/thumb_back/fw800/background/20230523/pngtree-golden-easter-eggs-and-presents-on-a-beige-background-image_2605142.jpg') center/cover;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -357,7 +357,8 @@
         }
 
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid #ccc;
@@ -367,7 +368,9 @@
             transition: border 0.3s;
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group textarea:focus {
+            /* THÊM TEXTAREA: Để ô Ghi chú cũng đổi màu viền vàng đồng bộ */
             border-color: #d4af37;
         }
 
@@ -545,6 +548,16 @@
                 line-height: 1;
             }
         }
+
+        /* Hiệu ứng khi di chuột vào ô sản phẩm */
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
     </style>
 </head>
 
@@ -605,38 +618,7 @@
 
     <section id="quatang" class="section" style="background-color: #fff;">
         <h2 class="section-title">Quà Tặng Nổi Bật</h2>
-        <div class="products-grid">
-            <div class="product-card">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5be456155546499.6356d88b79c7f.jpg"
-                    alt="Hộp quà cao cấp" class="product-img">
-                <div class="product-info">
-                    <h4>Set Quà Doanh Nhân Sang Trọng</h4>
-                    <p class="price">1.500.000 VNĐ</p>
-                    <button class="btn add-to-cart" data-name="Set Quà Doanh Nhân Sang Trọng" data-price="1500000"
-                        style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <img src="https://djatgo.id/wp-content/uploads/2023/10/Hampers-Lilin-Aroma-e1698640511678.jpg"
-                    alt="Quà tặng cá nhân hóa" class="product-img">
-                <div class="product-info">
-                    <h4>Set Nến Thơm & Trà Mộc</h4>
-                    <p class="price">450.000 VNĐ</p>
-                    <button class="btn add-to-cart" data-name="Set Nến Thơm & Trà Mộc" data-price="450000"
-                        style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
-                    alt="Hộp quà sự kiện" class="product-img">
-                <div class="product-info">
-                    <h4>Set Quà Tặng Sự Kiện (SLL)</h4>
-                    <p class="price">Liên hệ</p>
-                    <button class="btn" onclick="openContactModal()" style="padding: 8px 15px; font-size: 0.9rem;">Nhận
-                        tư vấn</button>
-                </div>
-            </div>
-        </div>
+        <div class="products-grid" id="products-container"></div>
     </section>
 
     <div id="cart-modal" class="modal">
@@ -697,7 +679,7 @@
                 <div class="form-group">
                     <label>Ghi chú đơn hàng (Nếu có)</label>
                     <textarea id="order-note" placeholder="Thêm lời dặn dò về đơn hàng" rows="2"
-                        style="width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; outline: none; transition: border 0.3s; resize: none;"></textarea>
+                        style="resize: none;"></textarea>
                 </div>
                 <div class="form-group">
                     <label>Hình thức vận chuyển (Phí ship tùy theo khu vực và loại hình vận chuyển) <span
@@ -890,24 +872,111 @@
         });
 
         // --- 4. LOGIC XỬ LÝ GIỎ HÀNG (ĐÃ NÂNG CẤP SỐ LƯỢNG) ---
+        // 1. DANH SÁCH SẢN PHẨM: Muốn thêm sản phẩm mới, bạn chỉ cần copy thêm 1 cụm { } rồi điền chữ vào đây là xong!
+        const danhSachSanPham = [
+            {
+                name: "Set Quà Doanh Nhân Sang Trọng",
+                price: 1500000,
+                priceText: "1.500.000 VNĐ",
+                img: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5be456155546499.6356d88b79c7f.jpg",
+                loaiNut: "giohang"
+            },
+            {
+                name: "Set Nến Thơm & Trà Mộc",
+                price: 450000,
+                priceText: "450.000 VNĐ",
+                img: "https://djatgo.id/wp-content/uploads/2023/10/Hampers-Lilin-Aroma-e1698640511678.jpg",
+                loaiNut: "giohang"
+            },
+            {
+                name: "Set Quà Chăm Sóc Sức Khỏe Cao Cấp",
+                price: 1200000,
+                priceText: "1.200.000 VNĐ",
+                img: "https://img.ws.mms.shopee.vn/49fe25fd7a40eee6a9f45a7fb711ab83",
+                loaiNut: "giohang"
+            },
+            {
+                name: "Set Quà Văn Phòng",
+                price: 350000,
+                priceText: "350.000 VNĐ",
+                img: "https://i.etsystatic.com/34523747/r/il/5d5fa3/6491947256/il_1080xN.6491947256_kqer.jpg",
+                loaiNut: "giohang"
+            },
+            {
+                name: "Set Quà Yêu Thương",
+                price: 600000,
+                priceText: "600.000 VNĐ",
+                img: "https://tse3.mm.bing.net/th/id/OIP.OJeI7fLgdnPUv_dhnpjjfAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
+                loaiNut: "giohang"
+            },
+            {
+                name: "Set Quà Tri Ân",
+                price: 850000,
+                priceText: "850.000 VNĐ",
+                img: "https://gaja.com.vn/wp-content/uploads/2024/12/DSC01727-Edit.JPG-scaled.jpg",
+                loaiNut: "giohang"
+            },
+            {
+                name: "Set Quà Tặng Cá Nhân Hóa",
+                price: 0,
+                priceText: "Liên hệ",
+                img: "https://images.unsplash.com/photo-1512909006721-3d6018887383?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+                loaiNut: "tuvan"
+            },
+            {
+                name: "Set Quà Tặng Sự Kiện (SLL)",
+                price: 0,
+                priceText: "Liên hệ",
+                img: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+                loaiNut: "tuvan"
+            },
+        ];
+
+        // 2. HÀM TỰ ĐỘNG IN SẢN PHẨM RA GIAO DIỆN
+        function hienThiSanPham() {
+            const container = document.getElementById('products-container');
+            if (!container) return;
+
+            let html = "";
+            danhSachSanPham.forEach(prod => {
+                let nutHtml = prod.loaiNut === "giohang"
+                    ? `<button class="btn add-to-cart" data-name="${prod.name}" data-price="${prod.price}" style="padding: 8px 15px; font-size: 0.9rem;">Thêm vào giỏ</button>`
+                    : `<button class="btn" onclick="openContactModal()" style="padding: 8px 15px; font-size: 0.9rem;">Nhận tư vấn</button>`;
+
+                html += `
+                    <div class="product-card">
+                        <img src="${prod.img}" alt="${prod.name}" class="product-img">
+                        <div class="product-info">
+                            <h4>${prod.name}</h4>
+                            <p class="price">${prod.priceText}</p>
+                            ${nutHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+        // Chạy hàm in sản phẩm ngay khi tải trang
+        hienThiSanPham();
+
+        // 3. XỬ LÝ LƯU GIỎ HÀNG THÔNG MINH (Event Delegation)
         let cart = [];
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVqK0K9dmL_XfqnEUsbVCe8laP6JTM4hDafrpS5vtj26VVVDpFX4FPEQGV1gZEclBifQ/exec";
         const cartCount = document.getElementById('cart-count');
         const cartItemsContainer = document.getElementById('cart-items-container');
         const cartTotalPrice = document.getElementById('cart-total-price');
 
-        const addButtons = document.querySelectorAll('.add-to-cart');
-        addButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const name = this.getAttribute('data-name');
-                const price = parseInt(this.getAttribute('data-price'));
+        // Lắng nghe sự kiện click trên toàn bộ khung sản phẩm
+        document.getElementById('products-container').addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('add-to-cart')) {
+                const name = e.target.getAttribute('data-name');
+                const price = parseInt(e.target.getAttribute('data-price'));
 
-                // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
                 const existingItem = cart.find(item => item.name === name);
                 if (existingItem) {
-                    existingItem.quantity += 1; // Nếu có rồi thì tăng số lượng
+                    existingItem.quantity += 1;
                 } else {
-                    cart.push({ name, price, quantity: 1 }); // Nếu chưa thì thêm mới với số lượng = 1
+                    cart.push({ name, price, quantity: 1 });
                 }
 
                 updateCartUI();
@@ -916,7 +985,7 @@
                     icon: "success",
                     title: `Đã thêm "${name}" vào giỏ hàng!`
                 });
-            });
+            }
         });
 
         function updateCartUI() {
