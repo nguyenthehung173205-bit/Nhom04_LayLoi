@@ -179,7 +179,7 @@
 
         /* --- Phần Hero --- */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://static.vecteezy.com/system/resources/thumbnails/039/894/927/small_2x/ai-generated-an-elegant-abstract-pattern-adorning-a-wrapped-gift-box-complemented-by-a-satin-ribbon-exuding-simplicity-and-finesse-free-photo.jpeg') center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://portal.janachowska.pl/wp-content/uploads/2024/02/AdobeStock_482721704-1536x1024.jpeg') center/cover;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -290,6 +290,7 @@
         /* --- KHÓA CUỘN TRANG KHI MỞ CỬA SỔ / MENU --- */
         body.no-scroll {
             overflow: hidden !important;
+            height: 100vh !important;
         }
 
         /* --- CẤU HÌNH CỬA SỔ MODAL CHUNG --- */
@@ -592,6 +593,166 @@
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
+
+        /* --- CSS CHO MENU DROP-DOWN (QUÀ TẶNG) --- */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            min-width: 800px;
+            /* TĂNG ĐỘ RỘNG ĐỂ CHỨA VỪA 3 CỘT */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
+            padding: 25px;
+            z-index: 1001;
+            border-top: 4px solid #d4af37;
+            text-align: left;
+        }
+
+        /* Hiệu ứng trượt xuống mượt mà */
+        .dropdown-menu.show {
+            display: flex;
+            animation: fadeInDown 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                top: 170%;
+            }
+
+            to {
+                opacity: 1;
+                top: 150%;
+            }
+        }
+
+        .dropdown-section {
+            flex: 1;
+        }
+
+        /* ĐƯỜNG KẺ DỌC MÀU VÀNG GOLD TRÊN MÁY TÍNH (PC) CHO 3 CỘT */
+        .dropdown-section:not(:last-child) {
+            padding-right: 25px;
+            border-right: 1px solid rgba(212, 175, 55, 0.35);
+            /* Đường kẻ dọc mảnh giữa các cột */
+        }
+
+        .dropdown-section:not(:first-child) {
+            padding-left: 25px;
+        }
+
+        .dropdown-section h4 {
+            color: #d4af37;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f5f5f5;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-section ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dropdown-section ul li {
+            width: 100%;
+            border-bottom: none !important;
+        }
+
+        /* THIẾT KẾ KHUNG Ô CHỌN CHO TỪNG ITEM */
+        .dropdown-section ul li a {
+            font-weight: 500 !important;
+            font-size: 0.92rem !important;
+            padding: 12px 15px !important;
+            color: #444 !important;
+            background-color: #fcfcfc;
+            border: 1px solid #eaebed;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            display: block;
+        }
+
+        /* HIỆU ỨNG KHI DI CHUỘT VÀO Ô CHỌN */
+        .dropdown-section ul li a:hover {
+            background-color: #fffdf5 !important;
+            border-color: #d4af37 !important;
+            color: #d4af37 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+        }
+
+        .arrow {
+            font-size: 0.7rem;
+            margin-left: 4px;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+
+        .dropdown.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* --- TÙY CHỈNH RESPONSIVE CHO ĐIỆN THOẠI (CHUYỂN THÀNH KẺ NGANG) --- */
+        @media (max-width: 768px) {
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                min-width: 100%;
+                box-shadow: none;
+                flex-direction: column;
+                padding: 15px 5px;
+                background-color: transparent;
+                border-top: none;
+            }
+
+            /* Tự động hủy đường kẻ dọc và chuyển thành kẻ ngang trên Mobile cho tất cả các phần ngoại trừ phần cuối */
+            .dropdown-section:not(:last-child) {
+                padding-right: 0;
+                border-right: none;
+                border-bottom: 1px dashed rgba(212, 175, 55, 0.4);
+                /* Thay bằng đường kẻ ngang đứt nét mảnh */
+                padding-bottom: 20px;
+                margin-bottom: 15px;
+            }
+
+            .dropdown-section:last-child {
+                padding-left: 0;
+                padding-bottom: 0;
+                margin-bottom: 0;
+            }
+
+            .dropdown-menu.show {
+                animation: fadeIn 0.3s ease forwards;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .dropdown-section ul li a {
+                background-color: #fff;
+                border: 1px solid #eee;
+            }
+        }
     </style>
 </head>
 
@@ -607,8 +768,47 @@
 
         <li><a href="#trangchu" onclick="closeMenu()">Trang chủ</a></li>
         <li><a href="#dichvu" onclick="closeMenu()">Dịch vụ</a></li>
-        <li><a href="#quatang" onclick="closeMenu()">Quà tặng</a></li>
-        <li><a href="javascript:void(0)" onclick="openContactModal(); closeMenu()">Liên hệ</a></li>
+
+        <li class="dropdown">
+            <a href="quatang.html" class="dropbtn" onclick="toggleDropdown(event)">Quà tặng <span
+                    class="arrow">▼</span></a>
+            <div class="dropdown-menu" id="giftDropdown">
+                <div class="dropdown-section">
+                    <h4>Cá nhân</h4>
+                    <ul>
+                        <li><a href="quatang.html?filter=ongba_chame" onclick="closeMenu()">Ông bà, Cha mẹ</a></li>
+                        <li><a href="quatang.html?filter=vo_chong_tinhnhan" onclick="closeMenu()">Vợ, Chồng, Người
+                                yêu</a></li>
+                        <li><a href="quatang.html?filter=treem_thoinoi" onclick="closeMenu()">Trẻ em / Thôi nôi</a></li>
+                        <li><a href="quatang.html?filter=banbe_dongnghiep" onclick="closeMenu()">Bạn bè, Đồng nghiệp</a>
+                        </li>
+                        <li><a href="quatang.html?filter=cuoi_tangia" onclick="closeMenu()">Quà Cưới, Tân gia</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-section">
+                    <h4>Doanh nghiệp</h4>
+                    <ul>
+                        <li><a href="quatang.html?filter=doitac_vip" onclick="closeMenu()">Đối tác / Khách hàng VIP</a>
+                        </li>
+                        <li><a href="quatang.html?filter=nhanvien" onclick="closeMenu()">Tri ân Nhân viên</a></li>
+                        <li><a href="quatang.html?filter=sukien_hoithao" onclick="closeMenu()">Quà Sự kiện / Đại hội</a>
+                        </li>
+                        <li><a href="quatang.html?filter=thanhlap_congty" onclick="closeMenu()">Kỷ niệm thành lập</a>
+                        </li>
+                        <li><a href="quatang.html?filter=le_tet" onclick="closeMenu()">Quà Lễ, Tết Doanh nghiệp</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-section">
+                    <h4>Đặt thiết kế</h4>
+                    <ul>
+                        <li><a href="quatang.html?filter=gom_canhanhoa" onclick="closeMenu()">Quà cá nhân hóa</a></li>
+                        <li><a href="quatang.html?filter=gom_soluonglon" onclick="closeMenu()">Cung cấp số lượng lớn</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li><a href="javascript:void(0)" onclick="closeMenu(); openContactModal()">Liên hệ</a></li>
     </ul>
 
     <header id="main-header">
@@ -909,48 +1109,6 @@
         // 1. DANH SÁCH SẢN PHẨM: Muốn thêm sản phẩm mới, bạn chỉ cần copy thêm 1 cụm { } rồi điền chữ vào đây là xong!
         const danhSachSanPham = [
             {
-                name: "Set Quà Doanh Nhân Sang Trọng",
-                price: 1500000,
-                priceText: "1.500.000 VNĐ",
-                img: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5be456155546499.6356d88b79c7f.jpg",
-                loaiNut: "giohang"
-            },
-            {
-                name: "Set Nến Thơm & Trà Mộc",
-                price: 450000,
-                priceText: "450.000 VNĐ",
-                img: "https://djatgo.id/wp-content/uploads/2023/10/Hampers-Lilin-Aroma-e1698640511678.jpg",
-                loaiNut: "giohang"
-            },
-            {
-                name: "Set Quà Chăm Sóc Sức Khỏe Cao Cấp",
-                price: 1200000,
-                priceText: "1.200.000 VNĐ",
-                img: "https://icolor.vn/wp-content/uploads/2023/02/mailand4.jpg",
-                loaiNut: "giohang"
-            },
-            {
-                name: "Set Quà Văn Phòng",
-                price: 350000,
-                priceText: "350.000 VNĐ",
-                img: "https://i.etsystatic.com/34523747/r/il/5d5fa3/6491947256/il_1080xN.6491947256_kqer.jpg",
-                loaiNut: "giohang"
-            },
-            {
-                name: "Set Quà Yêu Thương",
-                price: 600000,
-                priceText: "600.000 VNĐ",
-                img: "https://theknotcompany.in/cdn/shop/files/MAKEUP_1_770x_crop_center.jpg?v=1738154496",
-                loaiNut: "giohang"
-            },
-            {
-                name: "Set Quà Tri Ân",
-                price: 850000,
-                priceText: "850.000 VNĐ",
-                img: "https://gaja.com.vn/wp-content/uploads/2024/12/DSC01727-Edit.JPG-scaled.jpg",
-                loaiNut: "giohang"
-            },
-            {
                 name: "Set Quà Tặng Cá Nhân Hóa",
                 price: 0,
                 priceText: "Liên hệ",
@@ -962,6 +1120,13 @@
                 price: 0,
                 priceText: "Liên hệ",
                 img: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+                loaiNut: "tuvan"
+            },
+            {
+                name: "Danh mục quà tặng",
+                price: 0,
+                priceText: "Xem thêm",
+                img: "https://media.istockphoto.com/id/1447065072/photo/3d-rendering-different-gift-box.jpg?s=170667a&w=0&k=20&c=NXBE58oX4Exyzje9UiSNzD5i2v_DyU-rlyr7L8e2aOA=",
                 loaiNut: "tuvan"
             },
         ];
@@ -994,7 +1159,16 @@
         hienThiSanPham();
 
         // 3. XỬ LÝ LƯU GIỎ HÀNG THÔNG MINH (Event Delegation)
-        let cart = [];
+        // --- LOGIC XÓA GIỎ HÀNG KHI F5 (TẢI LẠI TRANG) ---
+        // 1. Kiểm tra xem người dùng có đang ấn F5 / Tải lại trang hay không
+        const navEntries = performance.getEntriesByType("navigation");
+        if (navEntries.length > 0 && navEntries[0].type === "reload") {
+            // Nếu đúng là tải lại trang, xóa sạch dữ liệu giỏ hàng trong bộ nhớ
+            localStorage.removeItem('sweetgift_cart');
+        }
+
+        // 2. Khởi tạo giỏ hàng (Nếu chuyển trang bình thường thì vẫn lấy dữ liệu, nếu F5 thì sẽ là mảng rỗng)
+        let cart = JSON.parse(localStorage.getItem('sweetgift_cart')) || [];
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVqK0K9dmL_XfqnEUsbVCe8laP6JTM4hDafrpS5vtj26VVVDpFX4FPEQGV1gZEclBifQ/exec";
         const cartCount = document.getElementById('cart-count');
         const cartItemsContainer = document.getElementById('cart-items-container');
@@ -1064,6 +1238,9 @@
 
             cartItemsContainer.innerHTML = html;
             cartTotalPrice.innerText = total.toLocaleString('vi-VN') + " VNĐ";
+
+            // THÊM DÒNG NÀY ĐỂ LƯU VÀO BỘ NHỚ:
+            localStorage.setItem('sweetgift_cart', JSON.stringify(cart));
         }
 
         function removeItem(index) {
@@ -1216,10 +1393,42 @@
 
             // Reset giỏ hàng và form
             cart = [];
+            localStorage.removeItem('sweetgift_cart'); // Xóa bộ nhớ sau khi mua xong
             updateCartUI();
             event.target.reset();
             closeOrderModal();
         }
+
+        // --- 6. LOGIC MỞ/ĐÓNG MENU QUÀ TẶNG (DROPDOWN) ---
+        function toggleDropdown(event) {
+            event.preventDefault(); // Chặn việc cuộn trang
+            const dropdownMenu = document.getElementById('giftDropdown');
+            const dropdownParent = dropdownMenu.closest('.dropdown');
+
+            // Bật/tắt class show
+            dropdownMenu.classList.toggle('show');
+            dropdownParent.classList.toggle('active');
+
+            // Tự động đóng menu nếu người dùng click ra vùng khác bên ngoài
+            document.addEventListener('click', function closeClickOutside(e) {
+                if (!dropdownParent.contains(e.target)) {
+                    dropdownMenu.classList.remove('show');
+                    dropdownParent.classList.remove('active');
+                    // Gỡ bỏ sự kiện lắng nghe để tối ưu bộ nhớ
+                    document.removeEventListener('click', closeClickOutside);
+                }
+            });
+        }
+
+        // --- 7. ĐỒNG BỘ GIỎ HÀNG KHI CHUYỂN TRANG HOẶC QUAY LẠI ---
+        window.addEventListener('pageshow', function (event) {
+            // Lấy lại dữ liệu mới nhất từ bộ nhớ dùng chung
+            cart = JSON.parse(localStorage.getItem('sweetgift_cart')) || [];
+
+            // Cập nhật lại giao diện giỏ hàng
+            updateCartUI();
+        });
+
     </script>
 </body>
 
