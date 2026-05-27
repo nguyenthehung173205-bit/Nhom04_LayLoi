@@ -9,6 +9,32 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* --- NỀN TẢNG & CSS CƠ BẢN --- */
+        /* --- TÙY BIẾN THANH CUỘN SANG TRỌNG --- */
+        html::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        html::-webkit-scrollbar-track {
+            background: #f9f9f9;
+        }
+
+        html::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #e6c667, #d4af37);
+            border-radius: 10px;
+            border: 2px solid #f9f9f9;
+        }
+
+        html::-webkit-scrollbar-thumb:hover {
+            background: #b5952f;
+        }
+
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #d4af37 #f9f9f9;
+            scroll-behavior: smooth;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -25,6 +51,8 @@
         body.no-scroll {
             overflow: hidden !important;
             height: 100vh !important;
+            height: 100dvh !important;
+            /* ĐÃ CẬP NHẬT DVH CHO MOBILE */
         }
 
         /* Khắc phục viền xanh Autofill */
@@ -163,6 +191,13 @@
             color: #555;
             min-width: 160px;
             text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .group-label:hover,
+        .group-label.active-label {
+            color: #d4af37;
         }
 
         .group-buttons {
@@ -227,7 +262,6 @@
             position: relative;
         }
 
-        /* CẤU HÌNH MÀU SẮC CHO CÁC HUY HIỆU (BADGES) */
         .product-badge {
             position: absolute;
             top: 10px;
@@ -245,17 +279,13 @@
             background-color: #e8a7a1;
         }
 
-        /* Màu hồng */
         .badge-doanhnghiep {
             background-color: #8faec4;
         }
 
-        /* Màu xanh */
         .badge-thietke {
             background-color: #d4af37;
         }
-
-        /* Màu vàng Gold cho Thiết kế */
 
         .product-info {
             padding: 20px;
@@ -328,6 +358,8 @@
             text-align: left;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             max-height: 90vh;
+            max-height: 90dvh;
+            /* ĐÃ CẬP NHẬT DVH CHO MOBILE */
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -425,6 +457,7 @@
             cursor: pointer;
         }
 
+        /* --- RESPONSIVE CHO ĐIỆN THOẠI --- */
         @media (max-width: 768px) {
             .nav-container {
                 padding: 15px 20px;
@@ -444,6 +477,15 @@
 
             .modal-content {
                 padding: 20px;
+            }
+
+            /* Tắt chữ giỏ hàng và ẩn nút quay lại trên điện thoại */
+            .cart-text {
+                display: none;
+            }
+
+            .back-home {
+                display: none;
             }
         }
     </style>
@@ -471,7 +513,8 @@
             <button class="filter-btn active" onclick="filterProducts('all', this)">✨ Hiển thị tất cả</button>
         </div>
         <div class="filter-group">
-            <span class="group-label">Cá nhân:</span>
+            <span class="group-label" onclick="filterMainCategory('canhan', this)" title="Lọc tất cả Quà Cá nhân">Cá
+                nhân:</span>
             <div class="group-buttons">
                 <button class="filter-btn" onclick="filterProducts('ongba_chame', this)">Ông bà, Cha mẹ</button>
                 <button class="filter-btn" onclick="filterProducts('vo_chong_tinhnhan', this)">Vợ, Chồng, Tình
@@ -483,7 +526,8 @@
             </div>
         </div>
         <div class="filter-group">
-            <span class="group-label">Doanh nghiệp:</span>
+            <span class="group-label" onclick="filterMainCategory('doanhnghiep', this)"
+                title="Lọc tất cả Quà Doanh nghiệp">Doanh nghiệp:</span>
             <div class="group-buttons">
                 <button class="filter-btn" onclick="filterProducts('doitac_vip', this)">Đối tác VIP</button>
                 <button class="filter-btn" onclick="filterProducts('nhanvien', this)">Tri ân nhân viên</button>
@@ -493,11 +537,11 @@
             </div>
         </div>
         <div class="filter-group">
-            <span class="group-label">Đặt thiết kế:</span>
+            <span class="group-label" onclick="filterMainCategory('thietke', this)"
+                title="Lọc tất cả Quà Đặt thiết kế">Đặt thiết kế:</span>
             <div class="group-buttons">
-                <button class="filter-btn" onclick="filterProducts('gom_canhanhoa', this)">Quà cá nhân hóa</button>
-                <button class="filter-btn" onclick="filterProducts('gom_soluonglon', this)">Cung cấp số lượng
-                    lớn</button>
+                <button class="filter-btn" onclick="filterProducts('canhanhoa', this)">Quà cá nhân hóa</button>
+                <button class="filter-btn" onclick="filterProducts('soluonglon', this)">Cung cấp số lượng lớn</button>
             </div>
         </div>
     </div>
@@ -758,7 +802,6 @@
                 grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#999; padding:40px 0;">Hiện chưa có sản phẩm nào.</p>`; return;
             }
             productList.forEach(prod => {
-                // LOGIC CẤU HÌNH HUY HIỆU (BADGE)
                 let badgeClass = 'badge-canhan';
                 let badgeText = 'Cá nhân';
 
@@ -786,11 +829,28 @@
             });
         }
 
+        // Hàm lọc các nhóm sản phẩm nhỏ
         function filterProducts(categoryKey, buttonElement) {
+            // Hủy hiệu ứng active của cả nút nhỏ và chữ mục lớn
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.group-label').forEach(lbl => lbl.classList.remove('active-label'));
+
             buttonElement.classList.add('active');
             if (categoryKey === 'all') renderProducts(products);
             else renderProducts(products.filter(p => p.subCategory === categoryKey));
+        }
+
+        // Hàm lọc danh mục sản phẩm lớn (Cá nhân, Doanh nghiệp, Thiết kế)
+        function filterMainCategory(mainType, element) {
+            // Hủy hiệu ứng active của tất cả các nút
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.group-label').forEach(lbl => lbl.classList.remove('active-label'));
+
+            // Kích hoạt màu vàng cho mục lớn được click
+            element.classList.add('active-label');
+
+            // Lọc ra tất cả các sản phẩm thuộc phân loại lớn đó
+            renderProducts(products.filter(p => p.type === mainType));
         }
 
         window.onload = function () {
@@ -806,10 +866,7 @@
         // --- XỬ LÝ LƯU TRỮ GIỎ HÀNG THÔNG MINH & TỰ ĐỘNG CHUYỂN TRANG VỀ TRANG CHỦ KHI ẤN F5 ---
         const navEntries = performance.getEntriesByType("navigation");
         if (navEntries.length > 0 && navEntries[0].type === "reload") {
-            // 1. Xóa sạch giỏ hàng khi tải lại
             localStorage.removeItem('sweetgift_cart');
-
-            // 2. Ép trình duyệt chuyển hướng về trang chủ
             window.location.href = 'index.html';
         }
 
@@ -847,7 +904,6 @@
             }
             updateCartUI();
 
-            // Hiển thị đầy đủ tên sản phẩm
             Toast.fire({
                 icon: "success",
                 title: `Đã thêm "${name}" vào giỏ hàng!`
@@ -858,6 +914,9 @@
         function updateCartUI() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCount.innerText = totalItems;
+
+            // FIX LỖI: Đưa lệnh lưu vào bộ nhớ lên ngay đầu tiên để chắc chắn luôn được lưu
+            localStorage.setItem('sweetgift_cart', JSON.stringify(cart));
 
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = "<p>Giỏ hàng đang trống.</p>";
@@ -895,8 +954,16 @@
 
             cartItemsContainer.innerHTML = html;
             cartTotalPrice.innerText = total.toLocaleString('vi-VN') + " VNĐ";
-            localStorage.setItem('sweetgift_cart', JSON.stringify(cart));
         }
+
+        // TÍNH NĂNG MỚI: Tự động đồng bộ giỏ hàng theo thời gian thực (Real-time)
+        // Nếu khách mở trang chủ ở tab 1, trang mua hàng ở tab 2. Xóa đồ ở tab này thì tab kia tự mất ngay lập tức!
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'sweetgift_cart') {
+                cart = JSON.parse(e.newValue) || [];
+                updateCartUI();
+            }
+        });
 
         function increaseQuantity(index) { cart[index].quantity += 1; updateCartUI(); }
         function decreaseQuantity(index) { if (cart[index].quantity > 1) { cart[index].quantity -= 1; updateCartUI(); } else { removeItem(index); } }
