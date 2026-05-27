@@ -525,7 +525,10 @@
             }
 
             .nav-links li a {
-                display: block;
+                display: flex;
+                /* Thay từ block thành flex để kích hoạt hộp linh hoạt */
+                align-items: center;
+                /* Ép chữ "Quà tặng" và mũi tên SVG phải thẳng hàng tuyệt đối */
                 padding: 15px 0;
                 font-size: 1.1rem;
                 color: #333;
@@ -708,34 +711,23 @@
             box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
         }
 
-        /* Cập nhật lớp .arrow */
+        /* --- CSS MỚI CHO MŨI TÊN SVG (CẬP NHẬT TRỤC THẲNG HÀNG) --- */
         .arrow {
-            display: inline-flex;
-            /* Chuyển thành inline-flex để căn chỉnh thẳng hàng */
-            align-items: center;
-            /* Căn giữa dọc */
-            width: 6px;
-            height: 6px;
-            border-right: 2px solid #333;
-            border-bottom: 2px solid #333;
-            transform: rotate(45deg);
-            margin-left: 8px;
-            /* Xóa bỏ margin-bottom cũ để tránh bị lệch */
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            /* Thêm transition cho màu */
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-left: 6px;
+            flex-shrink: 0;
+            /* Đảm bảo mũi tên giữ nguyên tỷ lệ, không bao giờ bị méo */
+            transition: transform 0.3s ease;
+            position: relative;
+            top: 2px;
+            /* Dịch nhẹ xuống 2px để trục nằm ngang cân bằng tuyệt đối với chữ */
         }
 
-        /* Thêm đoạn này để mũi tên đổi màu khi di chuột vào liên kết cha */
-        .nav-links li a:hover .arrow {
-            border-color: #d4af37;
-            /* Màu vàng Gold */
-        }
-
-        /* Cập nhật lớp khi menu hoạt động */
+        /* Khi menu hoạt động, lộn ngược lại 180 độ */
         .dropdown.active .arrow {
-            transform: rotate(225deg);
-            border-color: #d4af37;
-            /* Giữ màu vàng khi đang mở */
+            transform: rotate(180deg);
         }
 
         /* --- TÙY CHỈNH RESPONSIVE CHO ĐIỆN THOẠI (CHUYỂN THÀNH KẺ NGANG) --- */
@@ -804,7 +796,11 @@
 
         <li class="dropdown">
             <a href="quatang.html" class="dropbtn" onclick="toggleDropdown(event)">
-                Quà tặng <span class="arrow"></span>
+                Quà tặng
+                <svg class="arrow" viewBox="0 0 24 24">
+                    <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" fill="none" />
+                </svg>
             </a>
             <div class="dropdown-menu" id="giftDropdown">
                 <div class="dropdown-section">
