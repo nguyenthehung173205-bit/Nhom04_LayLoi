@@ -623,8 +623,7 @@
             left: 50%;
             transform: translateX(-50%);
             background-color: #fff;
-            min-width: 800px;
-            /* TĂNG ĐỘ RỘNG ĐỂ CHỨA VỪA 3 CỘT */
+            min-width: 1050px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
             border-radius: 12px;
             padding: 25px;
@@ -716,7 +715,7 @@
             display: inline-block;
             width: 14px;
             height: 14px;
-            margin-left: 3px;
+            margin-left: 2px;
             flex-shrink: 0;
             /* Đảm bảo mũi tên giữ nguyên tỷ lệ, không bao giờ bị méo */
             transition: transform 0.3s ease;
@@ -807,9 +806,9 @@
                     <h4>Cá nhân</h4>
                     <ul>
                         <li><a href="quatang.html?filter=ongba_chame" onclick="closeMenu()">Ông bà, Cha mẹ</a></li>
-                        <li><a href="quatang.html?filter=vo_chong_tinhnhan" onclick="closeMenu()">Vợ, Chồng, Người
+                        <li><a href="quatang.html?filter=vo_chong_tinhnhan" onclick="closeMenu()">Vợ chồng, Người
                                 yêu</a></li>
-                        <li><a href="quatang.html?filter=treem_thoinoi" onclick="closeMenu()">Trẻ em / Thôi nôi</a></li>
+                        <li><a href="quatang.html?filter=treem_thoinoi" onclick="closeMenu()">Trẻ em</a></li>
                         <li><a href="quatang.html?filter=banbe_dongnghiep" onclick="closeMenu()">Bạn bè, Đồng nghiệp</a>
                         </li>
                         <li><a href="quatang.html?filter=cuoi_tangia" onclick="closeMenu()">Quà Cưới, Tân gia</a></li>
@@ -818,21 +817,35 @@
                 <div class="dropdown-section">
                     <h4>Doanh nghiệp</h4>
                     <ul>
-                        <li><a href="quatang.html?filter=doitac_vip" onclick="closeMenu()">Đối tác / Khách hàng VIP</a>
+                        <li><a href="quatang.html?filter=doitac_vip" onclick="closeMenu()">Đối tác/Khách hàng VIP</a>
                         </li>
                         <li><a href="quatang.html?filter=nhanvien" onclick="closeMenu()">Tri ân Nhân viên</a></li>
-                        <li><a href="quatang.html?filter=sukien_hoithao" onclick="closeMenu()">Quà Sự kiện / Đại hội</a>
+                        <li><a href="quatang.html?filter=sukien_hoithao" onclick="closeMenu()">Sự kiện/Hội thảo</a>
                         </li>
                         <li><a href="quatang.html?filter=thanhlap_congty" onclick="closeMenu()">Kỷ niệm thành lập</a>
                         </li>
-                        <li><a href="quatang.html?filter=le_tet" onclick="closeMenu()">Quà Lễ, Tết Doanh nghiệp</a></li>
+                        <li><a href="quatang.html?filter=le_tet" onclick="closeMenu()">Quà ngày lễ</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-section">
+                    <h4>Quà theo mùa</h4>
+                    <ul>
+                        <li><a href="quatang.html?filter=muaxuan" onclick="closeMenu()">Mùa Xuân</a></li>
+                        <li><a href="quatang.html?filter=muaha" onclick="closeMenu()">Mùa Hạ</a></li>
+                        <li><a href="quatang.html?filter=muathu" onclick="closeMenu()">Mùa Thu</a></li>
+                        <li><a href="quatang.html?filter=muadong" onclick="closeMenu()">Mùa Đông</a></li>
+                        <li><a href="quatang.html?filter=tet_le" onclick="closeMenu()">Tết</a></li>
+                        <li><a href="quatang.html?filter=valentine" onclick="closeMenu()">Valentine</a></li>
+                        <li><a href="quatang.html?filter=trungthu" onclick="closeMenu()">Trung thu</a></li>
+                        <li><a href="quatang.html?filter=mua_cuoi" onclick="closeMenu()">Mùa Cưới</a></li>
+                        <li><a href="quatang.html?filter=giangsinh" onclick="closeMenu()">Giáng Sinh</a></li>
                     </ul>
                 </div>
                 <div class="dropdown-section">
                     <h4>Đặt thiết kế</h4>
                     <ul>
-                        <li><a href="quatang.html?filter=gom_canhanhoa" onclick="closeMenu()">Quà cá nhân hóa</a></li>
-                        <li><a href="quatang.html?filter=gom_soluonglon" onclick="closeMenu()">Cung cấp số lượng lớn</a>
+                        <li><a href="quatang.html?filter=gom_canhanhoa" onclick="closeMenu()">Đặt quà cá nhân hóa</a></li>
+                        <li><a href="quatang.html?filter=gom_soluonglon" onclick="closeMenu()">Đặt số lượng lớn</a>
                         </li>
                     </ul>
                 </div>
@@ -1320,12 +1333,8 @@
                     confirmButtonText: "Đi mua sắm"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        setTimeout(() => {
-                            const targetSection = document.getElementById("quatang");
-                            if (targetSection) {
-                                targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                            }
-                        }, 300);
+                        // Chuyển hướng người dùng sang trang quatang.html
+                        window.location.href = 'quatang.html';
                     }
                 });
                 return;
