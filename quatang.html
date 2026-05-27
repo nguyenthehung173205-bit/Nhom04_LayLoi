@@ -286,6 +286,11 @@
             background-color: #d4af37;
         }
 
+        .badge-theomua {
+            background-color: #9deba9;
+            /* Màu xanh lá tươi mát cho quà theo mùa */
+        }
+
         .product-info {
             padding: 20px;
         }
@@ -514,9 +519,9 @@
                 nhân:</span>
             <div class="group-buttons">
                 <button class="filter-btn" onclick="filterProducts('ongba_chame', this)">Ông bà, Cha mẹ</button>
-                <button class="filter-btn" onclick="filterProducts('vo_chong_tinhnhan', this)">Vợ, Chồng, Tình
-                    nhân</button>
-                <button class="filter-btn" onclick="filterProducts('treem_thoinoi', this)">Trẻ em, Thôi nôi</button>
+                <button class="filter-btn" onclick="filterProducts('vo_chong_nguoiyeu', this)">Vợ chồng, Người
+                    yêu</button>
+                <button class="filter-btn" onclick="filterProducts('treem', this)">Trẻ em</button>
                 <button class="filter-btn" onclick="filterProducts('banbe_dongnghiep', this)">Bạn bè, Đồng
                     nghiệp</button>
                 <button class="filter-btn" onclick="filterProducts('cuoi_tangia', this)">Quà Cưới, Tân gia</button>
@@ -526,19 +531,34 @@
             <span class="group-label" onclick="filterMainCategory('doanhnghiep', this)"
                 title="Lọc tất cả Quà Doanh nghiệp">Doanh nghiệp:</span>
             <div class="group-buttons">
-                <button class="filter-btn" onclick="filterProducts('doitac_vip', this)">Đối tác VIP</button>
+                <button class="filter-btn" onclick="filterProducts('doitac_vip', this)">Đối tác/ Khách hàng VIP</button>
                 <button class="filter-btn" onclick="filterProducts('nhanvien', this)">Tri ân nhân viên</button>
-                <button class="filter-btn" onclick="filterProducts('sukien_hoithao', this)">Sự kiện, Hội thảo</button>
+                <button class="filter-btn" onclick="filterProducts('sukien_hoithao', this)">Sự kiện/Hội thảo</button>
                 <button class="filter-btn" onclick="filterProducts('thanhlap_congty', this)">Kỷ niệm thành lập</button>
-                <button class="filter-btn" onclick="filterProducts('le_tet', this)">Quà Lễ, Tết</button>
+                <button class="filter-btn" onclick="filterProducts('le', this)">Quà ngày lễ</button>
+            </div>
+        </div>
+        <div class="filter-group">
+            <span class="group-label" onclick="filterMainCategory('theomua', this)" title="Lọc tất cả Quà theo mùa">Quà
+                theo mùa:</span>
+            <div class="group-buttons">
+                <button class="filter-btn" onclick="filterProducts('muaxuan', this)">Xuân</button>
+                <button class="filter-btn" onclick="filterProducts('muaha', this)">Hạ</button>
+                <button class="filter-btn" onclick="filterProducts('muathu', this)">Thu</button>
+                <button class="filter-btn" onclick="filterProducts('muadong', this)">Đông</button>
+                <button class="filter-btn" onclick="filterProducts('tet', this)">Tết</button>
+                <button class="filter-btn" onclick="filterProducts('valentine', this)">Valentine</button>
+                <button class="filter-btn" onclick="filterProducts('trungthu', this)">Trung thu</button>
+                <button class="filter-btn" onclick="filterProducts('mua_cuoi', this)">Cưới</button>
+                <button class="filter-btn" onclick="filterProducts('giangsinh', this)">Giáng Sinh</button>
             </div>
         </div>
         <div class="filter-group">
             <span class="group-label" onclick="filterMainCategory('thietke', this)"
                 title="Lọc tất cả Quà Đặt thiết kế">Đặt thiết kế:</span>
             <div class="group-buttons">
-                <button class="filter-btn" onclick="filterProducts('canhanhoa', this)">Quà cá nhân hóa</button>
-                <button class="filter-btn" onclick="filterProducts('soluonglon', this)">Cung cấp số lượng lớn</button>
+                <button class="filter-btn" onclick="filterProducts('canhanhoa', this)">Đặt quà cá nhân hóa</button>
+                <button class="filter-btn" onclick="filterProducts('soluonglon', this)">Đặt số lượng lớn</button>
             </div>
         </div>
     </div>
@@ -664,10 +684,9 @@
 
     <script>
         // DỮ LIỆU SẢN PHẨM
-        const products = [
-            // QUÀ TẶNG CÁ NHÂN
+        const rawProducts = [
+            // --- QUÀ TẶNG CÁ NHÂN ---
             {
-                id: 1,
                 subCategory: 'ongba_chame',
                 type: 'canhan',
                 tag: 'Ông bà, Cha mẹ',
@@ -677,27 +696,24 @@
                 img: 'https://icolor.vn/wp-content/uploads/2023/02/mailand4.jpg'
             },
             {
-                id: 2,
-                subCategory: 'vo_chong_tinhnhan',
-                type: 'canhan',
-                tag: 'Vợ, Chồng, Tình nhân',
+                subCategory: ['vo_chong_tinhnhan', 'valentine'],
+                type: ['canhan', 'theomua'],
+                tag: 'Vợ chồng, Người yêu / Valentine',
                 title: 'Set Quà Yêu Thương',
                 priceText: '600.000 VNĐ',
                 rawPrice: 600000,
                 img: 'https://theknotcompany.in/cdn/shop/files/MAKEUP_1_770x_crop_center.jpg?v=1738154496'
             },
             {
-                id: 3,
-                subCategory: 'treem_thoinoi',
+                subCategory: 'treem',
                 type: 'canhan',
-                tag: 'Trẻ em, Thôi nôi',
+                tag: 'Trẻ em',
                 title: 'Hộp Quà Thiên Thần Nhỏ',
                 priceText: '550.000 VNĐ',
                 rawPrice: 550000,
                 img: 'https://static.wixstatic.com/media/931aca_c65cc51c0cae4dcc9214e8c015c36bc3~mv2.jpg/v1/fill/w_980,h_654,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/931aca_c65cc51c0cae4dcc9214e8c015c36bc3~mv2.jpg'
             },
             {
-                id: 4,
                 subCategory: 'banbe_dongnghiep',
                 type: 'canhan',
                 tag: 'Bạn bè, Đồng nghiệp',
@@ -707,7 +723,6 @@
                 img: 'https://djatgo.id/wp-content/uploads/2023/10/Hampers-Lilin-Aroma-e1698640511678.jpg'
             },
             {
-                id: 5,
                 subCategory: 'cuoi_tangia',
                 type: 'canhan',
                 tag: 'Quà cưới, Tân gia',
@@ -717,9 +732,8 @@
                 img: 'https://gaja.com.vn/wp-content/uploads/2024/12/DSC01727-Edit.JPG-scaled.jpg'
             },
 
-            // QUÀ TẶNG DOANH NGHIỆP
+            // --- QUÀ TẶNG DOANH NGHIỆP ---
             {
-                id: 6,
                 subCategory: 'doitac_vip',
                 type: 'doanhnghiep',
                 tag: 'Đối tác, Khách VIP',
@@ -729,7 +743,6 @@
                 img: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5be456155546499.6356d88b79c7f.jpg'
             },
             {
-                id: 7,
                 subCategory: 'nhanvien',
                 type: 'doanhnghiep',
                 tag: 'Tri ân nhân viên',
@@ -739,39 +752,64 @@
                 img: 'https://i.etsystatic.com/34523747/r/il/5d5fa3/6491947256/il_1080xN.6491947256_kqer.jpg'
             },
             {
-                id: 8,
                 subCategory: 'sukien_hoithao',
                 type: 'doanhnghiep',
-                tag: 'Quà sự kiện, Hội thảo',
+                tag: 'Sự kiện, Hội thảo',
                 title: 'Bình Giữ Nhiệt & Bút Ký',
                 priceText: '280.000 VNĐ',
                 rawPrice: 280000,
-                img: 'https://cdn-icons-png.flaticon.com/512/4213/4213693.png'
+                img: 'https://s.alicdn.com/@sc04/kf/H37efaa917def440fbb4b163161e6bff6y.jpg_720x720q50.jpg'
             },
             {
-                id: 9,
                 subCategory: 'thanhlap_congty',
                 type: 'doanhnghiep',
                 tag: 'Kỷ niệm thành lập',
-                title: 'Kỷ Niệm Chương Pha Lê 3D',
-                priceText: '750.000 VNĐ',
-                rawPrice: 750000,
-                img: 'https://cdn-icons-png.flaticon.com/512/4213/4213970.png'
+                title: 'Thuyền buồm mạ vàng',
+                priceText: '2.500.000 VNĐ',
+                rawPrice: 2500000,
+                img: 'https://anmedia.vn/wp-content/uploads/2024/05/qua-tang-ky-niem-thanh-lap-cong-ty-13.png'
             },
             {
-                id: 10,
-                subCategory: 'le_tet',
+                subCategory: 'le',
                 type: 'doanhnghiep',
-                tag: 'Lễ Tết Doanh Nghiệp',
+                tag: 'Quà lễ cho doanh nghiệp',
                 title: 'Giỏ Quà Tết An Khang',
                 priceText: '1.800.000 VNĐ',
                 rawPrice: 1800000,
                 img: 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/11/gio-qua-tet-gom-nhung-gi-8.jpg'
             },
 
-            // QUÀ THIẾT KẾ (Đã cập nhật giá hiển thị thành Liên hệ)
+            // --- QUÀ THEO MÙA ---
             {
-                id: 11,
+                subCategory: 'valentine',
+                type: 'theomua',
+                tag: 'Valentine',
+                title: 'Hộp Chocolate Tình Yêu & Hoa Hồng',
+                priceText: '450.000 VNĐ',
+                rawPrice: 450000,
+                img: 'https://images.unsplash.com/photo-1518192167132-84f5e71440af?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+            },
+            {
+                subCategory: 'giangsinh',
+                type: 'theomua',
+                tag: 'Giáng Sinh',
+                title: 'Set Nến Thơm Lễ Hội Tuyết',
+                priceText: '350.000 VNĐ',
+                rawPrice: 350000,
+                img: 'https://images.unsplash.com/photo-1543589077-47d81606c1bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
+            },
+            {
+                subCategory: 'tet',
+                type: 'theomua',
+                tag: 'Tết Nguyên Đán',
+                title: 'Giỏ Quà Xuân Sum Vầy',
+                priceText: '1.200.000 VNĐ',
+                rawPrice: 1200000,
+                img: 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/11/gio-qua-tet-gom-nhung-gi-8.jpg'
+            },
+
+            // --- QUÀ THIẾT KẾ ---
+            {
                 subCategory: 'canhanhoa',
                 type: 'thietke',
                 tag: 'Cá nhân hóa',
@@ -781,7 +819,6 @@
                 img: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'
             },
             {
-                id: 12,
                 subCategory: 'soluonglon',
                 type: 'thietke',
                 tag: 'Số lượng lớn',
@@ -789,8 +826,14 @@
                 priceText: 'Liên hệ',
                 rawPrice: 0,
                 img: 'https://images.unsplash.com/photo-1607344645866-009c320b63e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'
-            },
+            }
         ];
+
+        //Tự động tạo mảng products có sẵn ID tăng dần
+        const products = rawProducts.map((item, index) => ({
+            id: index + 1,
+            ...item
+        }));
 
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVqK0K9dmL_XfqnEUsbVCe8laP6JTM4hDafrpS5vtj26VVVDpFX4FPEQGV1gZEclBifQ/exec";
 
@@ -812,61 +855,82 @@
             const grid = document.getElementById('productGrid');
             grid.innerHTML = '';
             if (productList.length === 0) {
-                grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#999; padding:40px 0;">Hiện chưa có sản phẩm nào.</p>`; return;
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#999; padding:40px 0;">Hiện chưa có sản phẩm nào.</p>`;
+                return;
             }
+
             productList.forEach(prod => {
-                let badgeClass = 'badge-canhan';
-                let badgeText = 'Cá nhân';
+                // Tự động tạo danh sách nhãn dán (Badge) hỗ trợ sản phẩm thuộc nhiều nhóm cùng lúc
+                let badgesHtml = `<div style="position: absolute; top: 10px; left: 10px; z-index: 2; display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">`;
+                // Chuyển đổi thành mảng để duyệt qua từng danh mục lớn
+                let typesArray = Array.isArray(prod.type) ? prod.type : [prod.type];
 
-                if (prod.type === 'doanhnghiep') {
-                    badgeClass = 'badge-doanhnghiep';
-                    badgeText = 'Doanh nghiệp';
-                } else if (prod.type === 'thietke') {
-                    badgeClass = 'badge-thietke';
-                    badgeText = 'Thiết kế';
-                }
+                typesArray.forEach(t => {
+                    if (t === 'canhan') badgesHtml += `<span class="product-badge badge-canhan" style="position: static;">Cá nhân</span>`;
+                    else if (t === 'doanhnghiep') badgesHtml += `<span class="product-badge badge-doanhnghiep" style="position: static;">Doanh nghiệp</span>`;
+                    else if (t === 'thietke') badgesHtml += `<span class="product-badge badge-thietke" style="position: static;">Thiết kế</span>`;
+                    else if (t === 'theomua') badgesHtml += `<span class="product-badge badge-theomua" style="position: static;">Quà theo mùa</span>`;
+                });
+                badgesHtml += `</div>`;
 
-                // KHẮC PHỤC LOGIC PHÂN TÁCH NÚT "THÊM VÀO GIỎ" VÀ "NHẬN TƯ VẤN"
+                // Logic phân tách nút "Thêm vào giỏ" và "Nhận tư vấn"
                 let nutHtml = "";
-                if (prod.type === 'thietke') {
+                if (typesArray.includes('thietke')) {
                     nutHtml = `<button class="btn-add" onclick="openContactModal()">Nhận tư vấn</button>`;
                 } else {
                     nutHtml = `<button class="btn-add" onclick="addToCart('${prod.title}', ${prod.rawPrice})">Thêm vào giỏ</button>`;
                 }
 
                 grid.innerHTML += `
-                    <div class="product-card">
-                        <div class="product-img">
-                            <span class="product-badge ${badgeClass}">${badgeText}</span>
-                            <img src="${prod.img}" alt="${prod.title}" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="product-info">
-                            <div style="color: #d4af37; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px;">🏷️ ${prod.tag}</div>
-                            <h4 class="product-title">${prod.title}</h4>
-                            <p class="product-price">${prod.priceText}</p>
-                            ${nutHtml}
-                        </div>
-                    </div>`;
+            <div class="product-card">
+                <div class="product-img">
+                    ${badgesHtml}
+                    <img src="${prod.img}" alt="${prod.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="product-info">
+                    <div style="color: #d4af37; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px;">🏷️ ${prod.tag}</div>
+                    <h4 class="product-title">${prod.title}</h4>
+                    <p class="product-price">${prod.priceText}</p>
+                    ${nutHtml}
+                </div>
+            </div>`;
             });
         }
 
-        // Hàm lọc các nhóm sản phẩm nhỏ
+        // Hàm lọc các nhóm sản phẩm nhỏ (Xuân, Hạ, Vợ chồng, Valentine,...)
         function filterProducts(categoryKey, buttonElement) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.group-label').forEach(lbl => lbl.classList.remove('active-label'));
 
             buttonElement.classList.add('active');
-            if (categoryKey === 'all') renderProducts(products);
-            else renderProducts(products.filter(p => p.subCategory === categoryKey));
+
+            if (categoryKey === 'all') {
+                renderProducts(products);
+            } else {
+                // Kiểm tra xem bộ lọc có tồn tại trong chuỗi hoặc mảng subCategory không
+                renderProducts(products.filter(p => {
+                    if (Array.isArray(p.subCategory)) {
+                        return p.subCategory.includes(categoryKey);
+                    }
+                    return p.subCategory === categoryKey;
+                }));
+            }
         }
 
-        // Hàm lọc danh mục sản phẩm lớn (Cá nhân, Doanh nghiệp, Thiết kế)
+        // Hàm lọc danh mục sản phẩm lớn (Cá nhân, Doanh nghiệp, Theo mùa, Thiết kế)
         function filterMainCategory(mainType, element) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.group-label').forEach(lbl => lbl.classList.remove('active-label'));
 
             element.classList.add('active-label');
-            renderProducts(products.filter(p => p.type === mainType));
+
+            // Kiểm tra xem danh mục lớn có tồn tại trong chuỗi hoặc mảng type không
+            renderProducts(products.filter(p => {
+                if (Array.isArray(p.type)) {
+                    return p.type.includes(mainType);
+                }
+                return p.type === mainType;
+            }));
         }
 
         window.onload = function () {
